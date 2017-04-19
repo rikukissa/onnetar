@@ -1,0 +1,11 @@
+.bounce-enter {
+  transform: scale(0, 0);
+  opacity: 0;
+  transition: transform 600ms, opacity 600ms;
+  transition-timing-function: ease-in-out;
+}
+
+.bounce-enter-active {
+  opacity: 1;
+  transform: scale(1, 1);
+}
