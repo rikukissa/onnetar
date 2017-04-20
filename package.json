@@ -9,6 +9,7 @@
     "query-string": "^4.3.4",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-share": "^1.13.2",
     "react-transition-group": "^1.1.2",
     "styled-components": "^1.4.5"
   },
