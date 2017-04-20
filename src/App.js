@@ -298,7 +298,6 @@ class App extends Component {
       const participants = state.participants.concat(names);
       return {
         participants,
-        seed: createSeed(participants, Date.now()),
         currentName: '',
       };
     });
@@ -341,13 +340,15 @@ class App extends Component {
   };
   shuffle = () => {
     const {participants} = this.state;
-    const winnerIndex = Math.floor(participants.length * random(this.state.seed));
+    const seed = this.state.seed || createSeed(participants, Date.now());
+    const winnerIndex = Math.floor(participants.length * random(seed));
     const winner = participants[winnerIndex];
 
     this.setState(
       () => ({
         shuffling: true,
-        targetIndex: participants.length * 3 + winnerIndex,
+        seed,
+        targetIndex: participants.length * 2 + winnerIndex,
         winner: participants[winnerIndex],
       }),
       this.loop,
@@ -359,7 +360,10 @@ class App extends Component {
     }));
   };
   closeModal = () => {
-    this.setState(() => ({winner: null}));
+    this.setState(() => ({
+      winner: null,
+      seed: null,
+    }));
   };
   render() {
     const canAdd = this.state.currentName === '';
