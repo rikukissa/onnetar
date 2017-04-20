@@ -318,7 +318,6 @@ class App extends Component {
       return;
     }
 
-
     this.setState(
       ({participants, currentlySelected}) => ({
         currentlySelected: currentlySelected === null ? 0 : currentlySelected + 1,
