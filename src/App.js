@@ -511,7 +511,7 @@ class App extends Component {
                 </WinnerText>
                 <FacebookShareButton
                   url={window.location.href}
-                  title="Onnetar"
+                  title={`${this.state.winner.name} - Olet paras! Pidä tästä kiinni myös jatkossa.`}
                   picture="http://onnetar.fi/fg-image.png"
                   description={
                     `Arpaonni suosi tällä kertaa osallistujaa ${this.state.winner.name}. Onnea!`
