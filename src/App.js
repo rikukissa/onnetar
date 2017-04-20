@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import queryString from 'query-string';
 import styled from 'styled-components';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
+import bezier from 'bezier';
 import logo from './logo.svg';
 import chicken from './chicken.svg';
-
 import {ShareButtons, generateShareIcon} from 'react-share';
 
 const {FacebookShareButton} = ShareButtons;
@@ -45,11 +45,12 @@ function random(seed) {
 }
 
 function shuffleEasing(t) {
-  return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+  const res = bezier([0, 0, 0, 1], t);
+  return res;
 }
 
 const AppContainer = styled.div`
-  padding-bottom: 140px;
+  padding-bottom: 250px;
 `;
 
 const Logo = styled.img`
@@ -346,7 +347,10 @@ class App extends Component {
       () =>
         setTimeout(
           this.loop,
-          Math.max(100, shuffleEasing(this.state.currentlySelected / this.state.targetIndex) * 200),
+          Math.max(
+            100,
+            shuffleEasing(this.state.currentlySelected / this.state.targetIndex) * 1000,
+          ),
         ),
     );
   };
@@ -368,7 +372,7 @@ class App extends Component {
       () => ({
         shuffling: true,
         seed,
-        targetIndex: participants.length * 2 + winnerIndex,
+        targetIndex: Math.floor(50 / participants.length) * participants.length + winnerIndex,
         winner: participants[winnerIndex],
       }),
       this.loop,

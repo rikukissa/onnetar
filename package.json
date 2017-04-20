@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "http://onnertar.fi",
   "dependencies": {
+    "bezier": "^0.1.0",
     "gh-pages": "^0.12.0",
     "lodash": "^4.17.4",
     "query-string": "^4.3.4",
