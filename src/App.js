@@ -5,9 +5,20 @@ import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 import './App.css';
 
+function createSeed(participants, timeSeed) {
+  return timeSeed +
+    participants
+      .map(({name}) => name)
+      .join('')
+      .split('')
+      .map(char => char.charCodeAt(0))
+      .reduce((total, charCode) => total + charCode);
+}
+
 function writeToUrl(state) {
   const storedState = {
-    participants: state.participants.map(({name}) => name).join(','),
+    s: state.seed,
+    p: state.participants.map(({name}) => name).join(','),
   };
 
   window.history.pushState('page2', 'Title', '/?' + queryString.stringify(storedState));
@@ -17,10 +28,14 @@ function getStoredState() {
   const urlParams = queryString.parse(window.location.search);
 
   return {
-    participants: urlParams.participants
-      ? urlParams.participants.split(',').map((name, id) => ({name, id}))
-      : [],
+    seed: urlParams.s === undefined ? 0 : parseInt(urlParams.s, 10),
+    participants: urlParams.p ? urlParams.p.split(',').map((name, id) => ({name, id})) : [],
   };
+}
+
+function random(seed) {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
 }
 
 function shuffleEasing(t) {
@@ -203,6 +218,7 @@ class App extends Component {
     currentlySelected: null,
     shuffling: false,
     popupStart: {top: 0, left: 0},
+    seed: 0,
   };
   elements = {};
   componentDidMount() {
@@ -229,10 +245,14 @@ class App extends Component {
         name,
       }));
 
-    this.setState(state => ({
-      participants: state.participants.concat(names),
-      currentName: '',
-    }));
+    this.setState(state => {
+      const participants = state.participants.concat(names);
+      return {
+        participants,
+        seed: createSeed(participants, Date.now()),
+        currentName: '',
+      };
+    });
   };
   loop = () => {
     if (this.state.currentlySelected === this.state.targetIndex) {
@@ -272,7 +292,7 @@ class App extends Component {
   };
   shuffle = () => {
     const {participants} = this.state;
-    const winnerIndex = Math.floor(participants.length * Math.random());
+    const winnerIndex = Math.floor(participants.length * random(this.state.seed));
     const winner = participants[winnerIndex];
 
     this.setState(
