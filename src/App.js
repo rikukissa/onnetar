@@ -11,6 +11,12 @@ const {FacebookShareButton} = ShareButtons;
 
 import './App.css';
 
+const PLACEHOLDERS = [
+  'pizza, kalakeitto, maksalaatikko...',
+  'Lauri, Antti, Pasi, Miro, Riku...',
+  'isi, äiti, perheen pikku verneri...',
+];
+
 function createSeed(participants, timeSeed) {
   return timeSeed +
     participants
@@ -289,11 +295,23 @@ class App extends Component {
     currentlySelected: null,
     shuffling: false,
     popupStart: {top: 0, left: 0},
+    currentPlaceholder: PLACEHOLDERS[Math.floor(Math.random() * PLACEHOLDERS.length)],
     seed: 0,
   };
   elements = {};
   componentDidMount() {
     this.setState(() => getStoredState());
+
+    setInterval(
+      () => {
+        this.setState(({currentPlaceholder}) => ({
+          currentPlaceholder: PLACEHOLDERS[
+            (PLACEHOLDERS.indexOf(currentPlaceholder) + 1) % PLACEHOLDERS.length
+          ],
+        }));
+      },
+      7000,
+    );
   }
   componentDidUpdate() {
     writeToUrl(this.state);
@@ -411,6 +429,7 @@ class App extends Component {
 
               <AddParticipantInput
                 rows="1"
+                placeholder={this.state.currentPlaceholder}
                 onKeyDown={this.submitIfEnter}
                 value={this.state.currentName}
                 onChange={this.updateName}
