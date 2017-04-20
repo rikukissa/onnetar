@@ -158,6 +158,7 @@ const Lot = styled.div`
   box-sizing: border-box;
   position: relative;
   cursor: pointer;
+  min-width: 4em;
 `;
 
 const RemoveLot = styled.div`
