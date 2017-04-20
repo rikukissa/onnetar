@@ -489,7 +489,7 @@ class App extends Component {
                 <FacebookShareButton
                   url={window.location.href}
                   title="Onnetar"
-                  picture="http://onnetar.fi/chicken.svg"
+                  picture="http://onnetar.fi/logo.png"
                   description={
                     `Arpaonni suosi tällä kertaa osallistujaa ${this.state.winner.name}. Onnea!`
                   }
