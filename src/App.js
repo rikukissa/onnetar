@@ -468,7 +468,7 @@ class App extends Component {
                   <FacebookShareButtonContent>
                     <FacebookIcon size={32} round />
                     <FacebookShareButtonText>
-                      Jaa tulos Facebookissa
+                      Arpaonni suosi tällä kertaa osallistujaa {this.state.winner.name}. Onnea!
                     </FacebookShareButtonText>
                   </FacebookShareButtonContent>
                 </FacebookShareButton>
