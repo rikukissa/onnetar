@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import queryString from 'query-string';
 import styled from 'styled-components';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
+import logo from './logo.svg';
+import chicken from './chicken.svg';
 
 import {ShareButtons, generateShareIcon} from 'react-share';
 
@@ -48,6 +50,16 @@ function shuffleEasing(t) {
 
 const AppContainer = styled.div`
   padding-bottom: 140px;
+`;
+
+const Logo = styled.img`
+  margin-right: -15px;
+  margin-top: 5px;
+  width: 110px;
+  @media (max-width: 380px) {
+    flex-shrink: 1;
+    width: 100%;
+  }
 `;
 
 const Description = styled.div`
@@ -104,11 +116,13 @@ const AddParticipantInput = styled.textarea`
   font-size: 26px;
   padding: 0.75em;
   flex-grow: 1;
-  border: 2px solid #9143c1;
+  border: 4px solid #9143c1;
   border-right-width: 0;
+  border-radius: 3px 0 0 3px;
 `;
 
 const Hero = styled.div`
+  display: flex;
   padding: 1em;
 `;
 
@@ -118,6 +132,9 @@ const Title = styled.h1`
   margin-top: 0;
   margin-bottom: 0;
   color: #9143c1;
+  @media (max-width: 380px) {
+    font-size: 40px;
+  }
 `;
 
 const Content = styled.div`
@@ -126,21 +143,25 @@ const Content = styled.div`
 
 const ShuffleButton = styled.div`
   bottom: 1rem;
-  left: 1rem;
+  width: 200px;
+  cursor: pointer;
   right: 1rem;
   border: 0;
   color: #fff;
-  text-transform: uppercase;
   background: #2c9eff;
   position: fixed;
   display: block;
-  padding: 0.4em 0;
+  padding: 0.5em;
   font: inherit;
   font-size: 40px;
   font-weight: 600;
   border-radius: 5px;
   text-align: center;
   z-index: 2;
+`;
+
+const ShuffleButtonImage = styled.img`
+  width: 80px;
 `;
 
 const Participants = styled.div`
@@ -370,10 +391,13 @@ class App extends Component {
     return (
       <AppContainer>
         <Hero>
-          <Title>Onnetar</Title>
-          <Description>
-            Oma arvonta vaivattomasti
-          </Description>
+          <Logo src={logo} alt="logo" />
+          <div>
+            <Title>Onnetar</Title>
+            <Description>
+              Oma arvonta vaivattomasti
+            </Description>
+          </div>
         </Hero>
         <Content>
           <AddParticipantForm onSubmit={this.addParticipant}>
@@ -421,9 +445,11 @@ class App extends Component {
           transitionEnterTimeout={600}
           transitionLeaveTimeout={600}
         >
-          {this.state.participants.length > 1 &&
+          {!this.state.winner &&
+            this.state.participants.length > 1 &&
             !this.state.shuffling &&
             <ShuffleButton key="shuffle" onClick={this.shuffle}>
+              <ShuffleButtonImage src={chicken} alt="chicken" />
               Suorita arvonta
             </ShuffleButton>}
         </CSSTransitionGroup>
@@ -463,6 +489,7 @@ class App extends Component {
                 <FacebookShareButton
                   url={window.location.href}
                   title="Onnetar"
+                  picture="http://onnetar.fi/chicken.svg"
                   description={
                     `Arpaonni suosi tällä kertaa osallistujaa ${this.state.winner.name}. Onnea!`
                   }

@@ -1,13 +1,21 @@
 .bounce-enter {
   transform: scale(0, 0);
-  opacity: 0;
-  transition: transform 600ms, opacity 600ms;
+  transition: transform 600ms;
   transition-timing-function: ease-in-out;
 }
 
 .bounce-enter-active {
-  opacity: 1;
   transform: scale(1, 1);
+}
+
+.bounce-leave {
+  transform: scale(1, 1);
+  transition: all 600ms;
+  transition-timing-function: ease-in-out;
+}
+
+.bounce-leave-active {
+  transform: rotate(90deg) scale(0.1, 0.1);
 }
 
 /* div prefixes so these will have greated precedence than the component styles themselves */
