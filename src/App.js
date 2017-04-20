@@ -286,7 +286,7 @@ class App extends Component {
     );
   };
   submitIfEnter = event => {
-    if (event.keyCode === 13) {
+    if (!event.shiftKey && event.keyCode === 13) {
       this.addParticipant(event);
     }
   };
