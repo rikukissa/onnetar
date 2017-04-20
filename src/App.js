@@ -274,9 +274,10 @@ class App extends Component {
       return;
     }
 
+
     this.setState(
       ({participants, currentlySelected}) => ({
-        currentlySelected: currentlySelected + 1,
+        currentlySelected: currentlySelected === null ? 0 : currentlySelected + 1,
       }),
       () =>
         setTimeout(
@@ -300,7 +301,6 @@ class App extends Component {
 
     this.setState(
       () => ({
-        currentlySelected: 0,
         shuffling: true,
         targetIndex: participants.length * 3 + winnerIndex,
         winner: participants[winnerIndex],
