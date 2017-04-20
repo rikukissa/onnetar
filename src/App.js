@@ -463,12 +463,14 @@ class App extends Component {
                 <FacebookShareButton
                   url={window.location.href}
                   title="Onnetar"
-                  description="Arvo mitä tahansa"
+                  description={
+                    `Arpaonni suosi tällä kertaa osallistujaa ${this.state.winner.name}. Onnea!`
+                  }
                 >
                   <FacebookShareButtonContent>
                     <FacebookIcon size={32} round />
                     <FacebookShareButtonText>
-                      Arpaonni suosi tällä kertaa osallistujaa {this.state.winner.name}. Onnea!
+                      Jaa tulos Facebookissa
                     </FacebookShareButtonText>
                   </FacebookShareButtonContent>
                 </FacebookShareButton>
