@@ -55,12 +55,12 @@ function random(seed) {
 }
 
 function shuffleEasing(t) {
-  return 1 - easeOutBy(15)(1 - t);
+  return 1 - easeOutBy(10)(1 - t);
 }
 
 const AppContainer = styled.div`
   padding-bottom: ${({ padded }) => padded ? 220 : 0}px;
-  transition: padding 300ms;
+  transition: padding 1300ms;
 `;
 
 const Logo = styled.img`

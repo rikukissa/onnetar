@@ -17,7 +17,7 @@ button.bounce-leave, button.bounce-leave:hover {
 }
 
 button.bounce-leave-active, button.bounce-leave-active:hover {
-  transform: rotate(90deg) scale(0.1, 0.1);
+  transform: scale(0.1, 0.1);
 }
 
 /* div prefixes so these will have greated precedence than the component styles themselves */
