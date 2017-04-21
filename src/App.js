@@ -7,11 +7,10 @@ import logo from './logo.svg';
 import chicken from './chicken.svg';
 import loader from './loader.svg';
 import link from './link.svg';
-import step1 from './step1.svg';
-import step2 from './step2.svg';
-import step3 from './step3.svg';
+
 import {ShareButtons, generateShareIcon} from 'react-share';
 import {shorten} from './service';
+import Guide from './components/Guide';
 
 const {FacebookShareButton, TwitterShareButton} = ShareButtons;
 
@@ -59,7 +58,7 @@ function shuffleEasing(t) {
 }
 
 const AppContainer = styled.div`
-  padding-bottom: 250px;
+  ${({buttonVisible}) => buttonVisible ? '' : 'padding-bottom: 220px;'}
 `;
 
 const Logo = styled.img`
@@ -96,48 +95,6 @@ const Tip = styled.div`
   margin-top: 1em;
 `;
 
-const Guide = styled.div`
-  display: flex;
-  padding: 1em;
-  flex-wrap: wrap;
-  justify-content: center;
-`;
-
-const Column = styled.div`
-  flex: 0.33;
-  position: relative;
-  min-width: 200px;
-  max-width: 260px;
-`;
-
-const GuideNumber = styled.div`
-  font-weight: bold;
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 1.5em;
-  text-align: center;
-  width: 1.5em;
-  flex-direction: column;
-  display: flex;
-  font-size: 16px;
-  border: 3px solid;
-  border-radius: 1000px;
-  justify-content: center;
-  align-items: center;
-`;
-
-const GuideImage = styled.div`
-  height: 120px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-`;
-
-const GuideDescription = styled.p`
-  text-align: center;
-`;
-
 const CloseModal = styled.div`
   position: absolute;
   top: 0.5em;
@@ -166,7 +123,7 @@ const AddParticipantButton = styled.button`
 
 const AddParticipantInput = styled(Textarea)`
   font-family: inherit;
-  font-size: 26px;
+  font-size: 28px;
   padding: 0.75em;
   flex-grow: 1;
   border: 4px solid #9143c1;
@@ -177,6 +134,8 @@ const AddParticipantInput = styled(Textarea)`
 const Hero = styled.div`
   display: flex;
   padding: 1em;
+  margin-top: 2em;
+  justify-content: center;
 `;
 
 const Title = styled.h1`
@@ -193,17 +152,16 @@ const Title = styled.h1`
 
 const Content = styled.div`
   flex-grow: 1;
+  max-width: 800px;
+  margin: auto;
 `;
 
 const ShuffleButton = styled.button`
-  bottom: 1rem;
-  width: 200px;
+  width: 90%;
   cursor: pointer;
-  right: 1rem;
   border: 0;
   color: #fff;
   background: #2c9eff;
-  position: fixed;
   display: block;
   padding: 0.5em;
   font: inherit;
@@ -214,6 +172,7 @@ const ShuffleButton = styled.button`
   z-index: 2;
   transition: transform 300ms;
   box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.1);
+  margin: 2rem auto;
   @media (max-width: 600px) {
     width: 80%;
     left: 10%;
@@ -270,7 +229,8 @@ const RemoveLot = styled.div`
     justify-content: center;
     align-items: center;
     content: 'Poista';
-    background: red;
+    border-radius: 3px;
+    background: #f95353;
     width: 100%;
     height: 100%;
     position: absolute;
@@ -574,9 +534,12 @@ class App extends Component {
   };
   render() {
     const canAdd = this.state.currentName === '';
+    const shuffleButtonVisible = !this.state.winner &&
+      this.state.participants.length > 1 &&
+      !this.state.shuffling;
 
     return (
-      <AppContainer>
+      <AppContainer buttonVisible={shuffleButtonVisible}>
         <Hero>
           <Logo src={logo} alt="logo" />
           <div>
@@ -587,12 +550,14 @@ class App extends Component {
           </div>
         </Hero>
         <Content>
+          <Guide />
+
           <AddParticipantForm onSubmit={this.addParticipant}>
-            <Label>Aloita lisäämällä arvontaan osallistujat:</Label>
+            <Label>1. Aloita lisäämällä arvontaan osallistujat:</Label>
 
             <AddParticipantWrapper>
               <AddParticipantInput
-                rows="1"
+                rows={1}
                 placeholder={this.state.currentPlaceholder}
                 onKeyDown={this.submitIfEnter}
                 value={this.state.currentName}
@@ -607,34 +572,6 @@ class App extends Component {
               Voit lisätä useita osallistujia yhdellä kertaa erottamalla nimet pilkulla, puolipisteellä tai rivinvaihdolla.
             </Tip>
           </AddParticipantForm>
-
-          {
-            this.state.participants.length === 0 && (
-              <Guide>
-                <Column>
-                  <GuideNumber>1.</GuideNumber>
-                  <GuideImage>
-                    <img src={step1} alt="Valitse osallistujat" />
-                  </GuideImage>
-                  <GuideDescription>Päätä arvontaan osallistujat</GuideDescription>
-                </Column>
-                <Column>
-                  <GuideNumber>2.</GuideNumber>
-                  <GuideImage>
-                    <img src={step2} alt="Syötä osallistujat Onnettarelle" />
-                  </GuideImage>
-                  <GuideDescription>Syötä osallistujat yllä olevaan tekstikenttään</GuideDescription>
-                </Column>
-                <Column>
-                  <GuideNumber>3.</GuideNumber>
-                  <GuideImage>
-                    <img src={step3} alt="Arvo" />
-                  </GuideImage>
-                  <GuideDescription>Paina ruudun alareunaan ilmestyvää arvontapainiketta</GuideDescription>
-                </Column>
-              </Guide>
-            )
-          }
 
           <Participants>
             {this.state.participants.map((participant, i) => {
@@ -655,20 +592,18 @@ class App extends Component {
               );
             })}
           </Participants>
+          <CSSTransitionGroup
+            transitionName="bounce"
+            transitionEnterTimeout={600}
+            transitionLeaveTimeout={600}
+          >
+            {shuffleButtonVisible &&
+              <ShuffleButton disabled={this.state.shuffling} key="shuffle" onClick={this.shuffle}>
+                <ShuffleButtonImage src={chicken} alt="chicken" />
+                Suorita arvonta
+              </ShuffleButton>}
+          </CSSTransitionGroup>
         </Content>
-        <CSSTransitionGroup
-          transitionName="bounce"
-          transitionEnterTimeout={600}
-          transitionLeaveTimeout={600}
-        >
-          {!this.state.winner &&
-            this.state.participants.length > 1 &&
-            !this.state.shuffling &&
-            <ShuffleButton disabled={this.state.shuffling} key="shuffle" onClick={this.shuffle}>
-              <ShuffleButtonImage src={chicken} alt="chicken" />
-              Suorita arvonta
-            </ShuffleButton>}
-        </CSSTransitionGroup>
         <style>
           {
             `
