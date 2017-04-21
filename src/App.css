@@ -1,20 +1,22 @@
-.bounce-enter {
+button.bounce-enter,
+button.bounce-enter:hover {
   transform: scale(0, 0);
   transition: transform 600ms;
   transition-timing-function: ease-in-out;
 }
 
-.bounce-enter-active {
+button.bounce-enter-active,
+button.bounce-enter-active:hover {
   transform: scale(1, 1);
 }
 
-.bounce-leave {
+button.bounce-leave, button.bounce-leave:hover {
   transform: scale(1, 1);
   transition: all 600ms;
   transition-timing-function: ease-in-out;
 }
 
-.bounce-leave-active {
+button.bounce-leave-active, button.bounce-leave-active:hover {
   transform: rotate(90deg) scale(0.1, 0.1);
 }
 
