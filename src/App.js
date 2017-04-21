@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import queryString from 'query-string';
 import styled from 'styled-components';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
-import bezier from 'bezier';
 import logo from './logo.svg';
 import chicken from './chicken.svg';
 import loader from './loader.svg';
@@ -149,7 +148,7 @@ const Content = styled.div`
   flex-grow: 1;
 `;
 
-const ShuffleButton = styled.div`
+const ShuffleButton = styled.button`
   bottom: 1rem;
   width: 200px;
   cursor: pointer;
@@ -392,7 +391,19 @@ class App extends Component {
         url: '',
       };
     });
+
+    if(this.state.shuffling) {
+      this.cancelShuffle();
+    }
+
   };
+  cancelShuffle = () => {
+    this.setState(() => ({
+      winner: null,
+      shuffling: false,
+      currentlySelected: null
+    }));
+  }
   loop = () => {
     if (this.state.currentlySelected === this.state.targetIndex) {
       const winnerLotRect = this.elements[this.state.winner.id].getBoundingClientRect();
@@ -406,6 +417,10 @@ class App extends Component {
           height: winnerLotRect.height,
         },
       }));
+      return;
+    }
+
+    if(!this.state.shuffling) {
       return;
     }
 
@@ -466,7 +481,13 @@ class App extends Component {
     return shorten(window.location.href).then(onShortUrlLoaded).catch(onShortUrlFailed);
   };
   shuffle = () => {
-    const {participants} = this.state;
+
+    const {shuffling, participants} = this.state;
+
+    if(shuffling) {
+      return;
+    }
+
     const seed = this.state.seed || createSeed(Date.now());
     const winnerIndex = Math.floor(participants.length * random(seed));
     const winner = participants[winnerIndex];
@@ -483,6 +504,9 @@ class App extends Component {
     );
   };
   removeParticipant = participant => {
+    if(this.state.shuffling) {
+      this.cancelShuffle();
+    }
     this.setState(({participants}) => ({
       participants: participants.filter(p => p !== participant),
     }));
@@ -557,7 +581,7 @@ class App extends Component {
           {!this.state.winner &&
             this.state.participants.length > 1 &&
             !this.state.shuffling &&
-            <ShuffleButton key="shuffle" onClick={this.shuffle}>
+            <ShuffleButton disabled={this.state.shuffling} key="shuffle" onClick={this.shuffle}>
               <ShuffleButtonImage src={chicken} alt="chicken" />
               Suorita arvonta
             </ShuffleButton>}
