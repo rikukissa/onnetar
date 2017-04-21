@@ -14,7 +14,9 @@ const {FacebookShareButton, TwitterShareButton} = ShareButtons;
 
 import './App.css';
 
-const MIN_SHUFFLES = 5;
+const MIN_SHUFFLES = 50;
+
+const easeOutBy = power => t => 1 - Math.abs(Math.pow(t - 1, power));
 
 const PLACEHOLDERS = [
   'pizza, kalakeitto, maksalaatikko...',
@@ -50,8 +52,7 @@ function random(seed) {
 }
 
 function shuffleEasing(t) {
-  const res = bezier([0, 0, 0, 1], t);
-  return res;
+  return 1 - easeOutBy(15)(1 - t);
 }
 
 const AppContainer = styled.div`
