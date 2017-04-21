@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import queryString from 'query-string';
 import styled from 'styled-components';
+import Textarea from 'react-textarea-autosize';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import logo from './logo.svg';
 import chicken from './chicken.svg';
@@ -162,7 +163,7 @@ const AddParticipantButton = styled.button`
   border-radius: 0 3px 3px 0;
 `;
 
-const AddParticipantInput = styled.textarea`
+const AddParticipantInput = styled(Textarea)`
   font-family: inherit;
   font-size: 26px;
   padding: 0.75em;
