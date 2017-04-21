@@ -58,7 +58,8 @@ function shuffleEasing(t) {
 }
 
 const AppContainer = styled.div`
-  ${({buttonVisible}) => buttonVisible ? '' : 'padding-bottom: 220px;'}
+  padding-bottom: ${({padded}) => padded ? 220 : 0}px;
+  transition: padding 300ms;
 `;
 
 const Logo = styled.img`
@@ -539,7 +540,7 @@ class App extends Component {
       !this.state.shuffling;
 
     return (
-      <AppContainer buttonVisible={shuffleButtonVisible}>
+      <AppContainer padded={!shuffleButtonVisible && this.state.participants.length > 0}>
         <Hero>
           <Logo src={logo} alt="logo" />
           <div>
@@ -675,7 +676,7 @@ class App extends Component {
                   </TwitterShareButtonContainer>
                   {this.state.url === '' || this.state.generatingForTwitter ? (
                     <UrlShareButtonContainer onClick={() => this.generateShortUrl()}>
-                      {this.state.generatingUrl
+                      {this.state.generatingUrl && !this.state.generatingForTwitter
                         ? <img src={loader} alt="Loading" />
                         : <UrlIcon />}
                       <FacebookShareButtonText>
