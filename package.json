@@ -2,7 +2,7 @@
   "name": "onnetar",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://onnertar.fi",
+  "homepage": "http://onnetar.fi",
   "dependencies": {
     "axios": "^0.16.1",
     "bezier": "^0.1.0",
