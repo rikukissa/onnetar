@@ -73,7 +73,7 @@ export default function Guide() {
           <GuideImage>
             <img src={step2} alt="Syötä osallistujat Onnettarelle" />
           </GuideImage>
-          <GuideDescription>Syötä osallistujat yllä olevaan tekstikenttään</GuideDescription>
+          <GuideDescription>Syötä osallistujat alla olevaan tekstikenttään</GuideDescription>
         </Column>
         <Column>
           <GuideNumber>3.</GuideNumber>
