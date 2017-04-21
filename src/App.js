@@ -5,11 +5,16 @@ import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import bezier from 'bezier';
 import logo from './logo.svg';
 import chicken from './chicken.svg';
+import loader from './loader.svg';
+import link from './link.svg';
 import {ShareButtons, generateShareIcon} from 'react-share';
+import {shorten} from './service';
 
-const {FacebookShareButton} = ShareButtons;
+const {FacebookShareButton, TwitterShareButton} = ShareButtons;
 
 import './App.css';
+
+const MIN_SHUFFLES = 5;
 
 const PLACEHOLDERS = [
   'pizza, kalakeitto, maksalaatikko...',
@@ -17,14 +22,8 @@ const PLACEHOLDERS = [
   'isi, äiti, perheen pikku verneri...',
 ];
 
-function createSeed(participants, timeSeed) {
-  return timeSeed +
-    participants
-      .map(({name}) => name)
-      .join('')
-      .split('')
-      .map(char => char.charCodeAt(0))
-      .reduce((total, charCode) => total + charCode);
+function createSeed(timeSeed) {
+  return parseInt(timeSeed.toString().substr(-3), 10);
 }
 
 function writeToUrl(state) {
@@ -92,6 +91,7 @@ const AddParticipantForm = styled.form`
 const Tip = styled.div`
   margin-top: 1em;
 `;
+
 const CloseModal = styled.div`
   position: absolute;
   top: 0.5em;
@@ -165,10 +165,17 @@ const ShuffleButton = styled.div`
   border-radius: 5px;
   text-align: center;
   z-index: 2;
+  @media (max-width: 600px) {
+    left: 1em;
+    width: auto;
+  }
 `;
 
 const ShuffleButtonImage = styled.img`
   width: 80px;
+  display: block;
+  margin: auto;
+  margin-bottom: 10px;
 `;
 
 const Participants = styled.div`
@@ -271,6 +278,7 @@ const WinnerText = styled.div`
 `;
 
 const FacebookIcon = generateShareIcon('facebook');
+const TwitterIcon = generateShareIcon('twitter');
 
 const FacebookShareButtonContent = styled.div`
   display: flex;
@@ -288,6 +296,44 @@ const FacebookShareButtonText = styled.div`
   font-weight: bold;
 `;
 
+const FacebookShareButtonContainer = styled(FacebookShareButton)`
+  margin-right: 1em
+`;
+
+const TwitterShareButtonContainer = styled(TwitterShareButton)`
+  margin-right: 1em
+`;
+
+const Social = styled.div`
+  display: flex;
+  margin-top: 1em;
+`;
+
+const UrlShareButtonContainer = styled.div`
+  display: flex;
+  cursor: pointer;
+`;
+
+const UrlIcon = styled.div`
+  width: 31px;
+  height: 31px;
+  border-radius: 32px;
+  background-color: #9143c1;
+  background-image: url(${link});
+  background-size: 55% 55%;
+  background-position: center center;
+  background-repeat: no-repeat;
+`;
+
+const UrlInput = styled.input`
+  width: 160px;
+  font: inherit;
+  border: 2px solid #ffb100;
+  padding: 0.5em;
+  color: #00aced;
+`;
+
+
 class App extends Component {
   state = {
     currentName: '',
@@ -295,8 +341,11 @@ class App extends Component {
     currentlySelected: null,
     shuffling: false,
     popupStart: {top: 0, left: 0},
+    generatingUrl: false,
+    generatingForTwitter: false,
     currentPlaceholder: PLACEHOLDERS[Math.floor(Math.random() * PLACEHOLDERS.length)],
     seed: 0,
+    url: '',
   };
   elements = {};
   componentDidMount() {
@@ -339,6 +388,7 @@ class App extends Component {
       return {
         participants,
         currentName: '',
+        url: '',
       };
     });
   };
@@ -380,18 +430,53 @@ class App extends Component {
   setRef = (el, participant) => {
     this.elements[participant.id] = el;
   };
+  generateShortUrl = (generatingForTwitter = false) => {
+
+    if(this.state.url !== '' && generatingForTwitter) {
+      return Promise.resolve();
+    }
+
+    this.setState(() => ({
+      generatingUrl: true,
+      url: '',
+      generatingForTwitter
+    }));
+
+    const onShortUrlLoaded = ({url}) =>
+      new Promise((resolve, reject) =>
+        this.setState(
+          () => ({
+            url,
+            generatingUrl: false
+          }),
+          resolve,
+        ));
+
+    const onShortUrlFailed = () =>
+      new Promise((resolve, reject) =>
+        this.setState(
+          () => ({
+            url: window.location.href,
+            generatingUrl: false
+          }),
+          resolve,
+        ))
+
+    return shorten(window.location.href).then(onShortUrlLoaded).catch(onShortUrlFailed);
+  };
   shuffle = () => {
     const {participants} = this.state;
-    const seed = this.state.seed || createSeed(participants, Date.now());
+    const seed = this.state.seed || createSeed(Date.now());
     const winnerIndex = Math.floor(participants.length * random(seed));
     const winner = participants[winnerIndex];
 
     this.setState(
       () => ({
         shuffling: true,
+        url: '',
         seed,
-        targetIndex: Math.floor(50 / participants.length) * participants.length + winnerIndex,
-        winner: participants[winnerIndex],
+        targetIndex: Math.floor(MIN_SHUFFLES / participants.length) * participants.length + winnerIndex,
+        winner,
       }),
       this.loop,
     );
@@ -504,26 +589,58 @@ class App extends Component {
               </WinnerPopupOpening>
               <WinnerPopupOpen className="winner-popup-open-content">
                 <WinnerLabel>
+                  {/*Paras mahdollinen vaihtoehto on:*/}
                   Ja voittaja on:
                 </WinnerLabel>
                 <WinnerText>
                   {this.state.winner.name}
                 </WinnerText>
-                <FacebookShareButton
-                  url={window.location.href}
-                  title={`${this.state.winner.name} - Olet paras! Pidä tästä kiinni myös jatkossa.`}
-                  picture="http://onnetar.fi/fg-image.png"
-                  description={
-                    `Arpaonni suosi tällä kertaa osallistujaa ${this.state.winner.name}. Onnea!`
-                  }
-                >
-                  <FacebookShareButtonContent>
-                    <FacebookIcon size={32} round />
-                    <FacebookShareButtonText>
-                      Jaa tulos Facebookissa
-                    </FacebookShareButtonText>
-                  </FacebookShareButtonContent>
-                </FacebookShareButton>
+                <Social>
+                  <FacebookShareButtonContainer
+                    url={window.location.href}
+                    title={
+                      `${this.state.winner.name} - Olet paras! Pidä tästä kiinni myös jatkossa.`
+                    }
+                    picture="http://onnetar.fi/fg-image.png"
+                    description={
+                      `Arpaonni suosi tällä kertaa osallistujaa ${this.state.winner.name}. Onnea!`
+                    }
+                  >
+                    <FacebookShareButtonContent>
+                      <FacebookIcon size={32} round />
+                      <FacebookShareButtonText>
+                        Jaa tulos Facebookissa
+                      </FacebookShareButtonText>
+                    </FacebookShareButtonContent>
+                  </FacebookShareButtonContainer>
+
+                  <TwitterShareButtonContainer
+                    beforeOnClick={() => this.generateShortUrl(true)}
+                    url={this.state.url}
+                    title={
+                      `${this.state.winner.name} - Olet paras! Pidä tästä kiinni myös jatkossa.`
+                    }
+                  >
+                    <FacebookShareButtonContent>
+                      {this.state.generatingUrl && this.state.generatingForTwitter
+                        ? <img src={loader} alt="Loading" />
+                        : <TwitterIcon size={32} round />}
+                      <FacebookShareButtonText>
+                        Jaa tulos Twitterissä
+                      </FacebookShareButtonText>
+                    </FacebookShareButtonContent>
+                  </TwitterShareButtonContainer>
+                  {this.state.url === '' || this.state.generatingForTwitter ? (
+                    <UrlShareButtonContainer onClick={() => this.generateShortUrl()}>
+                      {this.state.generatingUrl
+                        ? <img src={loader} alt="Loading" />
+                        : <UrlIcon />}
+                      <FacebookShareButtonText>
+                        Jaa linkki
+                      </FacebookShareButtonText>
+                    </UrlShareButtonContainer>
+                  ) : <UrlInput readOnly value={this.state.url} />}
+                </Social>
                 <CloseModal onClick={this.closeModal}>X</CloseModal>
               </WinnerPopupOpen>
             </WinnerPopup>}
