@@ -107,6 +107,7 @@ const Column = styled.div`
   flex: 0.33;
   position: relative;
   min-width: 200px;
+  max-width: 260px;
 `;
 
 const GuideNumber = styled.div`
