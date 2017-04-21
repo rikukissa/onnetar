@@ -7,6 +7,7 @@ import logo from './logo.svg';
 import chicken from './chicken.svg';
 import loader from './loader.svg';
 import link from './link.svg';
+import close from './close.svg';
 
 import {ShareButtons, generateShareIcon} from 'react-share';
 import {shorten} from './service';
@@ -16,7 +17,7 @@ const {FacebookShareButton, TwitterShareButton} = ShareButtons;
 
 import './App.css';
 
-const MIN_SHUFFLES = 50;
+const MIN_SHUFFLES = 30;
 
 const easeOutBy = power => t => 1 - Math.abs(Math.pow(t - 1, power));
 
@@ -101,10 +102,10 @@ const CloseModal = styled.div`
   top: 0.5em;
   right: 0.5em;
   cursor: pointer;
-  font-weight: bold;
-  text-align: center;
-  font-size: 28px;
-  color: #ffb100;
+`;
+
+const CloseIcon = styled.img`
+  width: 32px;
 `;
 
 const AddParticipantWrapper = styled.div`
@@ -283,6 +284,7 @@ const WinnerPopupOpen = styled.div`
 
 const WinnerLabel = styled.div`
   font-weight: bold;
+  text-align: center;
   font-size: 19px;
 `;
 const WinnerText = styled.div`
@@ -685,7 +687,9 @@ class App extends Component {
                     </UrlShareButtonContainer>
                   ) : <UrlInput readOnly value={this.state.url} />}
                 </Social>
-                <CloseModal onClick={this.closeModal}>X</CloseModal>
+                <CloseModal onClick={this.closeModal}>
+                  <CloseIcon src={close} alt="Sulje" />
+                </CloseModal>
               </WinnerPopupOpen>
             </WinnerPopup>}
         </CSSTransitionGroup>
