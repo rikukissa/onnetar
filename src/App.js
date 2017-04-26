@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import queryString from 'query-string';
 import styled from 'styled-components';
 import Textarea from 'react-textarea-autosize';
+import Confetti from 'react-dom-confetti';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
+
 import logo from './logo.svg';
 import chicken from './chicken.svg';
 import loader from './loader.svg';
@@ -26,6 +28,14 @@ const PLACEHOLDERS = [
   'Lauri, Antti, Pasi, Miro, Riku...',
   'isi, äiti, perheen pikku verneri...',
 ];
+
+const confettiConfig = {
+  angle: 90,
+  spread: 60,
+  startVelocity: 20,
+  elementCount: 40,
+  decay: 0.95,
+};
 
 function createSeed(timeSeed) {
   return parseInt(timeSeed.toString().substr(-3), 10);
@@ -416,7 +426,6 @@ class App extends Component {
     if (this.state.shuffling) {
       this.cancelShuffle();
     }
-
   };
   cancelShuffle = () => {
     this.setState(() => ({
@@ -592,6 +601,7 @@ class App extends Component {
                   key={participant.id}
                 >
                   {participant.name}
+                  <Confetti active={isWinner} config={confettiConfig} />
                   <RemoveLot onClick={() => this.removeParticipant(participant)} />
                 </Lot>
               );

@@ -12,6 +12,7 @@
     "query-string": "^4.3.4",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-dom-confetti": "^0.0.7",
     "react-share": "^1.13.2",
     "react-textarea-autosize": "^4.0.5",
     "react-transition-group": "^1.1.2",

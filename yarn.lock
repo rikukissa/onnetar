@@ -1859,6 +1859,10 @@ doctrine@^2.0.0:
     esutils "^2.0.2"
     isarray "^1.0.0"
 
+dom-confetti@0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/dom-confetti/-/dom-confetti-0.0.6.tgz#52e24d56670d456992dfdd27d2ece4148cfa4137"
+
 dom-converter@~0.1:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/dom-converter/-/dom-converter-0.1.4.tgz#a45ef5727b890c9bffe6d7c876e7b19cb0e17f3b"
@@ -5112,6 +5116,12 @@ react-dev-utils@^0.5.2:
     recursive-readdir "2.1.1"
     sockjs-client "1.0.1"
     strip-ansi "3.0.1"
+
+react-dom-confetti@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/react-dom-confetti/-/react-dom-confetti-0.0.7.tgz#d3517c3db1b0752556fe9e5a6290c66fa9a5c5c8"
+  dependencies:
+    dom-confetti "0.0.6"
 
 react-dom@^15.5.4:
   version "15.5.4"
