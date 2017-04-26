@@ -40,11 +40,15 @@ const GuideNumber = styled.div`
   align-items: center;
 `;
 
-const GuideImage = styled.div`
+const GuideImageContainer = styled.div`
   height: 120px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+`;
+
+const GuideImage = styled.img`
+  width: 200px;
 `;
 
 const GuideTitle = styled.h2`
@@ -55,7 +59,6 @@ const GuideDescription = styled.p`
   text-align: center;
 `;
 
-
 export default function Guide() {
   return (
     <Container>
@@ -63,23 +66,23 @@ export default function Guide() {
       <Columns>
         <Column>
           <GuideNumber>1.</GuideNumber>
-          <GuideImage>
-            <img src={step1} alt="Valitse osallistujat" />
-          </GuideImage>
+          <GuideImageContainer>
+            <GuideImage src={step1} alt="Valitse osallistujat" />
+          </GuideImageContainer>
           <GuideDescription>Päätä arvontaan osallistujat</GuideDescription>
         </Column>
         <Column>
           <GuideNumber>2.</GuideNumber>
-          <GuideImage>
-            <img src={step2} alt="Syötä osallistujat Onnettarelle" />
-          </GuideImage>
+          <GuideImageContainer>
+            <GuideImage src={step2} alt="Syötä osallistujat Onnettarelle" />
+          </GuideImageContainer>
           <GuideDescription>Syötä osallistujat alla olevaan tekstikenttään</GuideDescription>
         </Column>
         <Column>
           <GuideNumber>3.</GuideNumber>
-          <GuideImage>
-            <img src={step3} alt="Arvo" />
-          </GuideImage>
+          <GuideImageContainer>
+            <GuideImage src={step3} alt="Arvo" />
+          </GuideImageContainer>
           <GuideDescription>Paina ruudun alareunaan ilmestyvää arvontapainiketta</GuideDescription>
         </Column>
       </Columns>

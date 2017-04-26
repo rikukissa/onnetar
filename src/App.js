@@ -4,14 +4,15 @@ import styled from 'styled-components';
 import Textarea from 'react-textarea-autosize';
 import Confetti from 'react-dom-confetti';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
+import { ShareButtons, generateShareIcon } from 'react-share';
 
 import logo from './logo.svg';
 import chicken from './chicken.svg';
 import loader from './loader.svg';
 import link from './link.svg';
 import close from './close.svg';
+import logoText from './logo-text.svg';
 
-import { ShareButtons, generateShareIcon } from 'react-share';
 import { shorten } from './service';
 import Guide from './components/Guide';
 
@@ -74,21 +75,22 @@ const AppContainer = styled.div`
 `;
 
 const Logo = styled.img`
-  margin-right: -15px;
   margin-top: -8px;
   width: 110px;
   @media (max-width: 380px) {
     flex-shrink: 1;
-    width: 100px;
+    width: 80px;
   }
 `;
 
 const Description = styled.div`
   line-height: 1.1em;
   color: #a0a0a0;
-  margin-top: -19px;
   font-size: 19px;
   font-weight: 600;
+  @media (max-width: 380px) {
+    font-size: 14px;
+  }
 `;
 
 const Label = styled.label`
@@ -150,15 +152,16 @@ const Hero = styled.div`
   justify-content: center;
 `;
 
-const Title = styled.h1`
-  font-size: 56px;
-  font-weight: normal;
-  font-family: 'Fontdiner Swanky', cursive;
-  margin-top: 0;
-  margin-bottom: 0;
-  color: #9143c1;
+const TitleWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const Title = styled.img`
+  width: 240px;
   @media (max-width: 380px) {
-    font-size: 50px;
+    width: 150px;
   }
 `;
 
@@ -556,12 +559,12 @@ class App extends Component {
       <AppContainer padded={!shuffleButtonVisible && this.state.participants.length > 0}>
         <Hero>
           <Logo src={logo} alt="logo" />
-          <div>
-            <Title>Onnetar</Title>
+          <TitleWrapper>
+            <Title src={logoText} alt="Onneter" />
             <Description>
               Oma arvonta vaivattomasti
             </Description>
-          </div>
+          </TitleWrapper>
         </Hero>
         <Content>
           <Guide />
