@@ -31,10 +31,9 @@ const PLACEHOLDERS = [
 ];
 
 const confettiConfig = {
-  angle: 90,
   spread: 60,
   startVelocity: 20,
-  elementCount: 40,
+  elementCount: 100,
   decay: 0.95,
 };
 
@@ -603,7 +602,8 @@ class App extends Component {
                   key={participant.id}
                 >
                   {participant.name}
-                  <Confetti active={isWinner} config={confettiConfig} />
+                  <Confetti active={isWinner} config={{ ...confettiConfig, angle: 80 }} />
+                  <Confetti active={isWinner} config={{ ...confettiConfig, angle: 100 }} />
                   <RemoveLot onClick={() => this.removeParticipant(participant)} />
                 </Lot>
               );
