@@ -21,6 +21,7 @@ const Column = styled.div`
   position: relative;
   min-width: 200px;
   max-width: 260px;
+  flex-basis: auto;
 `;
 
 const GuideNumber = styled.div`
@@ -49,6 +50,9 @@ const GuideImageContainer = styled.div`
 
 const GuideImage = styled.img`
   width: 200px;
+  height: 120px;
+  display: block;
+  margin: auto;
 `;
 
 const GuideTitle = styled.h2`
