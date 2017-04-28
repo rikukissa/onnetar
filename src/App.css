@@ -70,3 +70,19 @@ div.center-enter-active .winner-popup-open-content {
   max-height: 100%;
   opacity: 1;
 }
+
+div.fade-enter {
+  opacity: 0;
+}
+
+div.fade-enter-active {
+  opacity: 1;
+}
+
+div.fade-leave {
+  opacity: 1;
+}
+
+div.fade-leave-active {
+  opacity: 0;
+}

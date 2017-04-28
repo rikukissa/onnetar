@@ -361,6 +361,17 @@ const UrlInput = styled.input`
   color: #00aced;
 `;
 
+const Fade = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.3);
+  transition: opacity 1000ms;
+`;
+
 class App extends Component {
   state = {
     currentName: '',
@@ -548,9 +559,12 @@ class App extends Component {
   };
   render() {
     const cantAdd = this.state.currentName === '';
+
     const shuffleButtonVisible = !this.state.winner &&
       this.state.participants.length > 1 &&
       !this.state.shuffling;
+
+    const winnerModalOpen = !this.state.shuffling && this.state.winner;
 
     return (
       <AppContainer padded={!shuffleButtonVisible && this.state.participants.length > 0}>
@@ -638,12 +652,18 @@ class App extends Component {
           }
         </style>
         <CSSTransitionGroup
+          transitionName="fade"
+          transitionEnterTimeout={1000}
+          transitionLeaveTimeout={1000}
+        >
+          {winnerModalOpen && <Fade onClick={this.closeModal} />}
+        </CSSTransitionGroup>
+        <CSSTransitionGroup
           transitionName="center"
           transitionEnterTimeout={1000}
           transitionLeaveTimeout={10}
         >
-          {!this.state.shuffling &&
-            this.state.winner &&
+          {winnerModalOpen &&
             <WinnerPopup>
               <WinnerPopupOpening className="winner-popup-opening-content">
                 <span>
