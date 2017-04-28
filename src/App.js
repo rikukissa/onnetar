@@ -296,6 +296,7 @@ const WinnerLabel = styled.div`
   font-weight: bold;
   text-align: center;
   font-size: 19px;
+  margin-top: 0.5em;
 `;
 const WinnerText = styled.div`
   font-weight: bold;
@@ -324,22 +325,26 @@ const FacebookShareButtonText = styled.div`
 `;
 
 const FacebookShareButtonContainer = styled(FacebookShareButton)`
-  margin-right: 1em
+  margin-right: 1em;
+  margin-bottom: 0.5em;
 `;
 
 const TwitterShareButtonContainer = styled(TwitterShareButton)`
-  margin-right: 1em
+  margin-right: 1em;
+  margin-bottom: 0.5em;
 `;
 
 const Social = styled.div`
   display: flex;
   margin-top: 1em;
+  flex-wrap: wrap;
   justify-content: center;
 `;
 
 const UrlShareButtonContainer = styled.div`
   display: flex;
   cursor: pointer;
+  margin-bottom: 0.5em;
 `;
 
 const UrlIcon = styled.div`
