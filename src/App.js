@@ -388,9 +388,6 @@ class App extends Component {
       7000,
     );
   }
-  componentDidUpdate() {
-    writeToUrl(this.state);
-  }
   componentWillUnmount() {
     clearInterval(this.intervalId);
   }
@@ -414,12 +411,15 @@ class App extends Component {
     this.setParticipants(this.state.participants.concat(newParticipants));
   };
   setParticipants = (names) => {
-    this.setState(() => {
-      return {
+    this.setState((state) => {
+      const newState = {
+        ...state,
         participants: names,
         currentName: '',
         url: '',
       };
+      writeToUrl(newState);
+      return newState;
     });
 
     if (this.state.shuffling) {
@@ -528,16 +528,22 @@ class App extends Component {
     const winner = allParticipants[winnerIndex];
 
     this.setState(
-      () => ({
-        shuffling: true,
-        url: '',
-        seed,
-        currentName: '',
-        participants: allParticipants,
-        targetIndex: Math.floor(MIN_SHUFFLES / allParticipants.length) * allParticipants.length +
-          winnerIndex,
-        winner,
-      }),
+      (state) => {
+        const newState = {
+          ...state,
+          shuffling: true,
+          url: '',
+          seed,
+          participants: allParticipants,
+          targetIndex: Math.floor(MIN_SHUFFLES / participants.length) * participants.length +
+            winnerIndex,
+          winner,
+        };
+
+        writeToUrl(newState);
+
+        return newState;
+      },
       this.loop,
     );
   };
@@ -545,9 +551,7 @@ class App extends Component {
     if (this.state.shuffling) {
       this.cancelShuffle();
     }
-    this.setState(({ participants }) => ({
-      participants: participants.filter((p) => p !== participant),
-    }));
+    this.setParticipants(this.state.participants.filter((p) => p !== participant));
   };
   closeModal = () => {
     this.setState(() => ({
