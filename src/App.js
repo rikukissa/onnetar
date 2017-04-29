@@ -14,6 +14,7 @@ import logoText from './logo-text.svg';
 
 import { shorten } from './service';
 import Guide from './components/Guide';
+import Fade from './components/Fade';
 import CloseIcon from './components/CloseIcon';
 
 import './App.css';
@@ -364,17 +365,6 @@ const UrlInput = styled.input`
   border: 2px solid #ffb100;
   padding: 0.5em;
   color: #00aced;
-`;
-
-const Fade = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-  background: rgba(0, 0, 0, 0.3);
-  transition: opacity 1000ms;
 `;
 
 class App extends Component {
