@@ -454,7 +454,7 @@ class App extends Component {
     }
 
     this.setState(
-      ({ participants, currentlySelected }) => ({
+      ({ currentlySelected }) => ({
         currentlySelected: currentlySelected === null ? 0 : currentlySelected + 1,
       }),
       () =>
@@ -535,7 +535,7 @@ class App extends Component {
           url: '',
           seed,
           participants: allParticipants,
-          targetIndex: Math.floor(MIN_SHUFFLES / participants.length) * participants.length +
+          targetIndex: Math.floor(MIN_SHUFFLES / allParticipants.length) * allParticipants.length +
             winnerIndex,
           winner,
         };
