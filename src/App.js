@@ -25,11 +25,7 @@ const MIN_SHUFFLES = 30;
 
 const easeOutBy = (power) => (t) => 1 - Math.abs(Math.pow(t - 1, power));
 
-const PLACEHOLDERS = [
-  'pizza, kalakeitto, maksalaatikko...',
-  'Lauri, Antti, Pasi, Miro, Riku...',
-  'isi, äiti, perheen pikku verneri...',
-];
+const PLACEHOLDERS = ['pizza, kalakeitto, maksalaatikko...', 'Lauri, Antti, Pasi, Miro, Riku...'];
 
 const confettiConfig = {
   spread: 60,
@@ -67,6 +63,10 @@ function random(seed) {
 
 function shuffleEasing(t) {
   return 1 - easeOutBy(10)(1 - t);
+}
+
+function splitToNames(str) {
+  return str.split(/[,;\n]/gi).map((name) => name.trim()).filter((name) => name !== '');
 }
 
 const AppContainer = styled.div`
@@ -174,8 +174,11 @@ const ShuffleButton = styled.button`
   border: 0;
   color: #fff;
   background: #2c9eff;
-  display: block;
-  padding: 0.5em;
+  background-image: url(${chicken});
+  background-repeat: no-repeat;
+  background-size: auto 60px;
+  background-position: 10px center;
+  padding: 1rem 80px;
   font: inherit;
   font-size: 40px;
   font-weight: 600;
@@ -183,26 +186,17 @@ const ShuffleButton = styled.button`
   text-align: center;
   z-index: 2;
   transition: transform 300ms;
+  position: relative;
   box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.1);
-  margin: 2rem auto;
-  &:hover {
-    transform: scale(1.1, 1.1);
-  }
 `;
 
 const ShuffleButtonContainer = styled.div`
-  padding: 1em;
-`;
-
-const ShuffleButtonImage = styled.img`
-  width: 80px;
-  display: block;
-  margin: auto;
-  margin-bottom: 10px;
+  margin-top: 2em;
+  padding: 0 1em;
 `;
 
 const Participants = styled.div`
-  display: flex;
+  display: ${({ fullSized }) => fullSized ? 'block' : 'flex'};
   flex-wrap: wrap;
   padding: 0 0.5em;
   justify-content: center;
@@ -406,19 +400,18 @@ class App extends Component {
       currentName: name,
     }));
   };
-  addParticipant = (event) => {
-    event.preventDefault();
+  participantsWithIds = (names) => {
     const participantsLength = this.state.participants.length;
 
-    const names = this.state.currentName
-      .split(/[,;\n]/gi)
-      .map((name) => name.trim())
-      .map((name, i) => ({
-        id: participantsLength + i,
-        name,
-      }));
-
-    this.setParticipants(this.state.participants.concat(names));
+    return names.map((name, i) => ({
+      id: participantsLength + i,
+      name,
+    }));
+  };
+  addParticipant = (event) => {
+    event.preventDefault();
+    const newParticipants = this.participantsWithIds(splitToNames(this.state.currentName));
+    this.setParticipants(this.state.participants.concat(newParticipants));
   };
   setParticipants = (names) => {
     this.setState(() => {
@@ -518,20 +511,30 @@ class App extends Component {
   shuffle = () => {
     const { shuffling, participants } = this.state;
 
+    let allParticipants = participants;
+
+    const pendingNames = splitToNames(this.state.currentName);
+
+    if (pendingNames.length > 0) {
+      allParticipants = allParticipants.concat(this.participantsWithIds(pendingNames));
+    }
+
     if (shuffling) {
       return;
     }
 
     const seed = this.state.seed || createSeed(Date.now());
-    const winnerIndex = Math.floor(participants.length * random(seed));
-    const winner = participants[winnerIndex];
+    const winnerIndex = Math.floor(allParticipants.length * random(seed));
+    const winner = allParticipants[winnerIndex];
 
     this.setState(
       () => ({
         shuffling: true,
         url: '',
         seed,
-        targetIndex: Math.floor(MIN_SHUFFLES / participants.length) * participants.length +
+        currentName: '',
+        participants: allParticipants,
+        targetIndex: Math.floor(MIN_SHUFFLES / allParticipants.length) * allParticipants.length +
           winnerIndex,
         winner,
       }),
@@ -554,10 +557,11 @@ class App extends Component {
   };
   render() {
     const cantAdd = this.state.currentName === '';
+    const multipleParticipantsInTextInput = splitToNames(this.state.currentName).length > 1;
 
     const shuffleButtonVisible = !this.state.winner &&
-      this.state.participants.length > 1 &&
-      !this.state.shuffling;
+      !this.state.shuffling &&
+      (this.state.participants.length > 1 || multipleParticipantsInTextInput);
 
     const winnerModalOpen = !this.state.shuffling && this.state.winner;
 
@@ -589,15 +593,14 @@ class App extends Component {
               />
               {!cantAdd &&
                 <AddParticipantButton>
-                  Lisää<br /> osallistuja
+                  Lisää<br /> osallistujat
                 </AddParticipantButton>}
             </AddParticipantWrapper>
             <Tip>
               Voit lisätä useita osallistujia yhdellä kertaa erottamalla nimet pilkulla, puolipisteellä tai rivinvaihdolla.
             </Tip>
           </AddParticipantForm>
-
-          <Participants>
+          <Participants fullSized={this.state.participants.length < 6}>
             {this.state.participants.map((participant, i) => {
               const isWinner = !this.state.shuffling && this.state.winner === participant;
 
@@ -626,12 +629,11 @@ class App extends Component {
             {shuffleButtonVisible &&
               <ShuffleButtonContainer>
                 <ShuffleButton disabled={this.state.shuffling} key="shuffle" onClick={this.shuffle}>
-
-                  <ShuffleButtonImage src={chicken} alt="chicken" />
                   Suorita arvonta
                 </ShuffleButton>
               </ShuffleButtonContainer>}
           </CSSTransitionGroup>
+
         </Content>
         <style>
           {
