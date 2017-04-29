@@ -25,7 +25,11 @@ const MIN_SHUFFLES = 30;
 
 const easeOutBy = (power) => (t) => 1 - Math.abs(Math.pow(t - 1, power));
 
-const PLACEHOLDERS = ['pizza, kalakeitto, maksalaatikko...', 'Lauri, Antti, Pasi, Miro, Riku...'];
+const PLACEHOLDERS = [
+  'pizza, kalakeitto, maksalaatikko...',
+  'Lauri, Antti, Pasi, Miro, Riku...',
+  '😂, 😎, 😬, 💩',
+];
 
 const confettiConfig = {
   spread: 60,
@@ -70,7 +74,7 @@ function splitToNames(str) {
 }
 
 const AppContainer = styled.div`
-  padding-bottom: ${({ padded }) => padded ? 220 : 0}px;
+  padding: 1em;
   transition: padding 1300ms;
 `;
 
@@ -101,9 +105,7 @@ const Label = styled.label`
   font-size: 16px;
 `;
 
-const AddParticipantForm = styled.form`
-  padding: 1em;
-`;
+const AddParticipantForm = styled.form``;
 
 const Tip = styled.div`
   margin-top: 1em;
@@ -140,12 +142,25 @@ const AddParticipantInput = styled(Textarea)`
   flex-grow: 1;
   border: 4px solid #9143c1;
   border-radius: 3px;
+  &::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    opacity: 0.6;
+  }
+  &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    opacity: 0.6;
+  }
+  &::-moz-placeholder { /* Mozilla Firefox 19+ */
+    opacity: 0.6;
+  }
+  &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    opacity: 0.6;
+  }
 `;
 
 const Hero = styled.div`
   display: flex;
   padding: 1em;
   margin-top: 2em;
+  margin-bottom: 2em;
   justify-content: center;
 `;
 
@@ -192,13 +207,12 @@ const ShuffleButton = styled.button`
 
 const ShuffleButtonContainer = styled.div`
   margin-top: 2em;
-  padding: 0 1em;
 `;
 
 const Participants = styled.div`
   display: ${({ fullSized }) => fullSized ? 'block' : 'flex'};
   flex-wrap: wrap;
-  padding: 0 0.5em;
+  margin-top: 2em;
   justify-content: center;
 `;
 
@@ -208,9 +222,9 @@ const Lot = styled.div`
   align-items: center;
   background: ${({ highlighted }) => highlighted ? '#ffb100' : '#65d065'};
   z-index: ${({ highlighted, winner }) => highlighted || winner ? 1 : 0};
-  ${({ highlighted }) => highlighted ? 'transform: scale(1.5, 1.5)' : ''};
+  ${({ highlighted }) => highlighted ? 'transform: scale(1.1, 1.1)' : ''};
   transition: transform 200ms;
-  margin: 1em 0.5em;
+  margin: 1em ${({ fullSized }) => fullSized ? 0 : '0.5em'};
   padding: 0.5em;
   font-weight: bold;
   color: #fff;
@@ -568,9 +582,10 @@ class App extends Component {
       (this.state.participants.length > 1 || multipleParticipantsInTextInput);
 
     const winnerModalOpen = !this.state.shuffling && this.state.winner;
+    const fullSized = this.state.participants.length < 6;
 
     return (
-      <AppContainer padded={!shuffleButtonVisible && this.state.participants.length > 0}>
+      <AppContainer>
         <Hero>
           <Logo src={logo} alt="logo" />
           <TitleWrapper>
@@ -604,7 +619,7 @@ class App extends Component {
               Voit lisätä useita osallistujia yhdellä kertaa erottamalla nimet pilkulla, puolipisteellä tai rivinvaihdolla.
             </Tip>
           </AddParticipantForm>
-          <Participants fullSized={this.state.participants.length < 6}>
+          <Participants fullSized={fullSized}>
             {this.state.participants.map((participant, i) => {
               const isWinner = !this.state.shuffling && this.state.winner === participant;
 
@@ -615,6 +630,7 @@ class App extends Component {
                   innerRef={(el) => this.setRef(el, participant)}
                   winner={isWinner}
                   highlighted={highlighted}
+                  fullSized={fullSized}
                   key={participant.id}
                 >
                   {participant.name}
