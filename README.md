@@ -1,3 +1,12 @@
+# Onnetar.fi
+App for creating your own raffles
+
+
+![Logo](https://github.com/rikukissa/onnetar/blob/master/public/logo.png?raw=true)
+
+
+------
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
