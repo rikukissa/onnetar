@@ -73,8 +73,10 @@ const GuideTitle = styled.h2`
   text-align: center;
 `;
 
-const GuideDescription = styled.p`
+const GuideDescription = styled.h2`
   text-align: center;
+  font-weight: normal;
+  font-size: inherit;
 `;
 
 const config = JSON.parse(window.localStorage.getItem('config')) || {

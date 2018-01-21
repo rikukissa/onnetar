@@ -87,7 +87,8 @@ const Logo = styled.img`
   }
 `;
 
-const Description = styled.div`
+const Description = styled.h1`
+  margin: 0;
   line-height: 1.1em;
   color: #a0a0a0;
   font-size: 19px;
