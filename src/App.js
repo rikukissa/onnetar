@@ -34,7 +34,7 @@ const PLACEHOLDERS = [
 const confettiConfig = {
   spread: 60,
   startVelocity: 20,
-  elementCount: 100,
+  elementCount: 200,
   decay: 0.95,
 };
 
@@ -181,6 +181,11 @@ const Content = styled.div`
   flex-grow: 1;
   max-width: 800px;
   margin: auto;
+`;
+const ConfettiContainer = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
 `;
 
 const ShuffleButton = styled.button`
@@ -619,6 +624,9 @@ class App extends Component {
               Voit lisätä useita osallistujia yhdellä kertaa erottamalla nimet pilkulla, puolipisteellä tai rivinvaihdolla.
             </Tip>
           </AddParticipantForm>
+          <ConfettiContainer>
+            <Confetti active={winnerModalOpen} config={{ ...confettiConfig }} />
+          </ConfettiContainer>
           <Participants fullSized={fullSized}>
             {this.state.participants.map((participant, i) => {
               const isWinner = !this.state.shuffling && this.state.winner === participant;
@@ -634,8 +642,6 @@ class App extends Component {
                   key={participant.id}
                 >
                   {participant.name}
-                  <Confetti active={isWinner} config={{ ...confettiConfig, angle: 80 }} />
-                  <Confetti active={isWinner} config={{ ...confettiConfig, angle: 100 }} />
                   <RemoveLot onClick={() => this.removeParticipant(participant)} />
                 </Lot>
               );
