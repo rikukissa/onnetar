@@ -79,17 +79,28 @@ const GuideDescription = styled.h2`
   font-size: inherit;
 `;
 
-const config = JSON.parse(window.localStorage.getItem('config')) || {
+const DEFAULT_CONFIG = {
   guideClosed: false,
 };
 
+function getConfig() {
+  let config = DEFAULT_CONFIG;
+  try {
+    config = JSON.parse(window.localStorage.getItem('config')) || DEFAULT_CONFIG;
+    // eslint-disable-next-line no-empty
+  } catch (err) {
+
+  }
+  return config;
+}
+
 function updateConfig(patch) {
-  window.localStorage.setItem('config', JSON.stringify({ ...config, ...patch }));
+  window.localStorage.setItem('config', JSON.stringify({ ...getConfig(), ...patch }));
 }
 
 export default class Guide extends Component {
   state = {
-    closed: config.guideClosed,
+    closed: getConfig().guideClosed,
   };
   closeGuide = () => {
     updateConfig({ guideClosed: true });
