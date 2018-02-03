@@ -158,7 +158,7 @@ const AddParticipantInput = styled(Textarea)`
   }
 `;
 
-const Hero = styled.div`
+const LogoWrapper = styled.div`
   display: flex;
   padding: 1em;
   margin-top: 2em;
@@ -184,6 +184,7 @@ const Content = styled.div`
   max-width: 800px;
   margin: auto;
 `;
+
 const ConfettiContainer = styled.div`
   position: fixed;
   top: 50%;
@@ -593,15 +594,20 @@ class App extends Component {
 
     return (
       <AppContainer>
-        <Hero>
-          <Logo src={logo} alt="logo" />
-          <TitleWrapper>
-            <Title src={logoText} alt="Onneter" />
-            <Description>
-              Arvo ihan mitä vain
-            </Description>
-          </TitleWrapper>
-        </Hero>
+        <div>
+          <LogoWrapper>
+            <Logo src={logo} alt="logo" />
+            <TitleWrapper>
+              <Title src={logoText} alt="Onneter" />
+              <Description>
+                Arvo ihan mitä vain<br />
+                <div className="fb-share-button" data-href={document.location.href} data-layout="button" data-size="large" data-mobile-iframe="true">
+                  <a className="fb-xfbml-parse-ignore" target="_blank noreferrer" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fonnetar.fi%2F&amp;src=sdkpreparse">Jaa</a>
+                </div>
+              </Description>
+            </TitleWrapper>
+          </LogoWrapper>
+        </div>
         <Content>
           <Guide />
 
@@ -661,7 +667,6 @@ class App extends Component {
                 </ShuffleButton>
               </ShuffleButtonContainer>}
           </CSSTransitionGroup>
-
         </Content>
         <style>
           {

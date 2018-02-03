@@ -8,9 +8,10 @@
   <meta name="keywords" content="arvonta,ilmainen,arvo,random,kana,tipu,arpa,lotto">
   <meta property="og:url" content="http://onnetar.fi" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Onnetar" />
-  <meta property="og:description" content="Luo oma arvontasi" />
+  <meta property="og:title" content="Arvo mitä vain - Onnetar" />
+  <meta property="og:description" content="Luo oma arvonta mihin käyttöön tahansa ja jaa se kavereidesi kanssa. Voit esimerkiksi arpoa lounaspaikan, tiskivuoren taltuttajan tai käyttää Onnetarta ratkaisemaan Facebook-arvonnan tuloksen." />
   <meta property="og:image" content="http://onnetar.fi/logo.png" />
+
   <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
   <script src="https://use.typekit.net/ehe4cmf.js"></script>
   <script>
@@ -28,14 +29,14 @@
     try { Typekit.load({ async: true }); } catch (e) { }
   </script>
   <script>
-    (function(h,o,t,j,a,r){
-        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-        h._hjSettings={hjid:753599,hjsv:6};
-        a=o.getElementsByTagName('head')[0];
-        r=o.createElement('script');r.async=1;
-        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-        a.appendChild(r);
-    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+    (function (h, o, t, j, a, r) {
+      h.hj = h.hj || function () { (h.hj.q = h.hj.q || []).push(arguments) };
+      h._hjSettings = { hjid: 753599, hjsv: 6 };
+      a = o.getElementsByTagName('head')[0];
+      r = o.createElement('script'); r.async = 1;
+      r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+      a.appendChild(r);
+    })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
   </script>
   <!--
       Notice the use of %PUBLIC_URL% in the tag above.
@@ -50,6 +51,14 @@
 </head>
 
 <body>
+  <div id="fb-root"></div>
+  <script>(function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = 'https://connect.facebook.net/fi_FI/sdk.js#xfbml=1&version=v2.12&appId=1353360468089444&autoLogAppEvents=1';
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
   <div id="root"></div>
   <!--
       This HTML file is a template.
