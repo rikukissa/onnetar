@@ -179,6 +179,10 @@ const Title = styled.img`
   }
 `;
 
+const SocialButtons = styled.div`
+  text-align: center;
+`;
+
 const Content = styled.div`
   flex-grow: 1;
   max-width: 800px;
@@ -601,10 +605,12 @@ class App extends Component {
               <Title src={logoText} alt="Onneter" />
               <Description>
                 Arvo ihan mitä vain<br />
+              </Description>
+              <SocialButtons>
                 <div className="fb-share-button" data-href={document.location.href} data-layout="button" data-size="large" data-mobile-iframe="true">
                   <a className="fb-xfbml-parse-ignore" target="_blank noreferrer" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fonnetar.fi%2F&amp;src=sdkpreparse">Jaa</a>
                 </div>
-              </Description>
+              </SocialButtons>
             </TitleWrapper>
           </LogoWrapper>
         </div>
