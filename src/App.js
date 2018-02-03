@@ -89,9 +89,10 @@ const Logo = styled.img`
 
 const Description = styled.h1`
   margin: 0;
-  line-height: 1.1em;
+  line-height: 1.7em;
   color: #a0a0a0;
   font-size: 19px;
+  text-align: center;
   font-weight: 600;
   @media (max-width: 380px) {
     font-size: 14px;
@@ -597,7 +598,7 @@ class App extends Component {
           <TitleWrapper>
             <Title src={logoText} alt="Onneter" />
             <Description>
-              Oma arvonta vaivattomasti
+              Arvo ihan mitä vain
             </Description>
           </TitleWrapper>
         </Hero>
