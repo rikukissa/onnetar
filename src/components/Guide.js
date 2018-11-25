@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import styled from "styled-components";
 
-import step1 from '../step1.svg';
-import step2 from '../step2.svg';
-import step3 from '../step3.svg';
+import step1 from "../step1.svg";
+import step2 from "../step2.svg";
+import step3 from "../step3.svg";
 
-import CloseIcon from './CloseIcon';
+import CloseIcon from "./CloseIcon";
 
 const Container = styled.div`
   padding: 1em;
@@ -80,27 +80,29 @@ const GuideDescription = styled.h2`
 `;
 
 const DEFAULT_CONFIG = {
-  guideClosed: false,
+  guideClosed: false
 };
 
 function getConfig() {
   let config = DEFAULT_CONFIG;
   try {
-    config = JSON.parse(window.localStorage.getItem('config')) || DEFAULT_CONFIG;
+    config =
+      JSON.parse(window.localStorage.getItem("config")) || DEFAULT_CONFIG;
     // eslint-disable-next-line no-empty
-  } catch (err) {
-
-  }
+  } catch (err) {}
   return config;
 }
 
 function updateConfig(patch) {
-  window.localStorage.setItem('config', JSON.stringify({ ...getConfig(), ...patch }));
+  window.localStorage.setItem(
+    "config",
+    JSON.stringify({ ...getConfig(), ...patch })
+  );
 }
 
 export default class Guide extends Component {
   state = {
-    closed: getConfig().guideClosed,
+    closed: getConfig().guideClosed
   };
   closeGuide = () => {
     updateConfig({ guideClosed: true });
@@ -116,7 +118,7 @@ export default class Guide extends Component {
         <Close onClick={this.closeGuide}>
           <CloseIcon />
         </Close>
-        <GuideTitle>3 helppoa vaihetta:</GuideTitle>
+        <GuideTitle>3 äärimmäisen helppoa vaihetta:</GuideTitle>
         <Columns>
           <Column>
             <GuideNumber>1.</GuideNumber>
@@ -130,7 +132,9 @@ export default class Guide extends Component {
             <GuideImageContainer>
               <GuideImage src={step2} alt="Syötä osallistujat Onnettarelle" />
             </GuideImageContainer>
-            <GuideDescription>Syötä osallistujat alla olevaan tekstikenttään</GuideDescription>
+            <GuideDescription>
+              Syötä osallistujat alla olevaan tekstikenttään
+            </GuideDescription>
           </Column>
           <Column>
             <GuideNumber>3.</GuideNumber>

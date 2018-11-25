@@ -1,41 +1,41 @@
-import React, { Component } from 'react';
-import queryString from 'query-string';
-import styled from 'styled-components';
-import Textarea from 'react-textarea-autosize';
-import Confetti from 'react-dom-confetti';
-import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
-import { ShareButtons, generateShareIcon } from 'react-share';
+import React, { Component } from "react";
+import queryString from "query-string";
+import styled from "styled-components";
+import Textarea from "react-textarea-autosize";
+import Confetti from "react-dom-confetti";
+import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
+import { ShareButtons, generateShareIcon } from "react-share";
 
-import logo from './logo.svg';
-import chicken from './chicken.svg';
-import loader from './loader.svg';
-import link from './link.svg';
-import logoText from './logo-text.svg';
+import logo from "./logo.svg";
+import chicken from "./chicken.svg";
+import loader from "./loader.svg";
+import link from "./link.svg";
+import logoText from "./logo-text.svg";
 
-import { shorten } from './service';
-import Guide from './components/Guide';
-import Fade from './components/Fade';
-import CloseIcon from './components/CloseIcon';
+import { shorten } from "./service";
+import Guide from "./components/Guide";
+import Fade from "./components/Fade";
+import CloseIcon from "./components/CloseIcon";
 
-import './App.css';
+import "./App.css";
 
 const { FacebookShareButton, TwitterShareButton } = ShareButtons;
 
 const MIN_SHUFFLES = 30;
 
-const easeOutBy = (power) => (t) => 1 - Math.abs(Math.pow(t - 1, power));
+const easeOutBy = power => t => 1 - Math.abs(Math.pow(t - 1, power));
 
 const PLACEHOLDERS = [
-  'pizza, kalakeitto, maksalaatikko...',
-  'Lauri, Antti, Pasi, Miro, Riku...',
-  '😂, 😎, 😬, 💩',
+  "pizza, kalakeitto, maksalaatikko...",
+  "Lauri, Antti, Pasi, Miro, Riku...",
+  "😂, 😎, 😬, 💩"
 ];
 
 const confettiConfig = {
   spread: 60,
   startVelocity: 20,
   elementCount: 200,
-  decay: 0.95,
+  decay: 0.95
 };
 
 function createSeed(timeSeed) {
@@ -45,10 +45,14 @@ function createSeed(timeSeed) {
 function writeToUrl(state) {
   const storedState = {
     s: state.seed,
-    p: state.participants.map(({ name }) => name).join(','),
+    p: state.participants.map(({ name }) => name).join(",")
   };
 
-  window.history.pushState('page2', 'Title', `/?${queryString.stringify(storedState)}`);
+  window.history.pushState(
+    "page2",
+    "Title",
+    `/?${queryString.stringify(storedState)}`
+  );
 }
 
 function getStoredState() {
@@ -56,7 +60,9 @@ function getStoredState() {
 
   return {
     seed: urlParams.s === undefined ? 0 : parseInt(urlParams.s, 10),
-    participants: urlParams.p ? urlParams.p.split(',').map((name, id) => ({ name, id })) : [],
+    participants: urlParams.p
+      ? urlParams.p.split(",").map((name, id) => ({ name, id }))
+      : []
   };
 }
 
@@ -70,7 +76,10 @@ function shuffleEasing(t) {
 }
 
 function splitToNames(str) {
-  return str.split(/[,;\n]/gi).map((name) => name.trim()).filter((name) => name !== '');
+  return str
+    .split(/[,;\n]/gi)
+    .map(name => name.trim())
+    .filter(name => name !== "");
 }
 
 const AppContainer = styled.div`
@@ -144,16 +153,20 @@ const AddParticipantInput = styled(Textarea)`
   flex-grow: 1;
   border: 4px solid #9143c1;
   border-radius: 3px;
-  &::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+  &::-webkit-input-placeholder {
+    /* WebKit, Blink, Edge */
     opacity: 0.6;
   }
-  &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  &:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
     opacity: 0.6;
   }
-  &::-moz-placeholder { /* Mozilla Firefox 19+ */
+  &::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
     opacity: 0.6;
   }
-  &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  &:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
     opacity: 0.6;
   }
 `;
@@ -222,7 +235,7 @@ const ShuffleButtonContainer = styled.div`
 `;
 
 const Participants = styled.div`
-  display: ${({ fullSized }) => fullSized ? 'block' : 'flex'};
+  display: ${({ fullSized }) => (fullSized ? "block" : "flex")};
   flex-wrap: wrap;
   margin-top: 2em;
   justify-content: center;
@@ -232,11 +245,11 @@ const Lot = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: ${({ highlighted }) => highlighted ? '#ffb100' : '#65d065'};
-  z-index: ${({ highlighted, winner }) => highlighted || winner ? 1 : 0};
-  ${({ highlighted }) => highlighted ? 'transform: scale(1.1, 1.1)' : ''};
+  background: ${({ highlighted }) => (highlighted ? "#ffb100" : "#65d065")};
+  z-index: ${({ highlighted, winner }) => (highlighted || winner ? 1 : 0)};
+  ${({ highlighted }) => (highlighted ? "transform: scale(1.1, 1.1)" : "")};
   transition: transform 200ms;
-  margin: 1em ${({ fullSized }) => fullSized ? 0 : '0.5em'};
+  margin: 1em ${({ fullSized }) => (fullSized ? 0 : "0.5em")};
   padding: 0.5em;
   font-weight: bold;
   color: #fff;
@@ -260,7 +273,7 @@ const RemoveLot = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    content: 'Poista';
+    content: "Poista";
     border-radius: 3px;
     background: #f95353;
     width: 100%;
@@ -275,6 +288,14 @@ const RemoveLot = styled.div`
       left: 0;
     }
   }
+`;
+
+const RemoveLotIcon = styled(CloseIcon)`
+  fill: #fff;
+  position: absolute;
+  right: 1em;
+  width: 16px;
+  height: 16px;
 `;
 
 const WinnerPopup = styled.div`
@@ -326,8 +347,8 @@ const WinnerText = styled.div`
   color: #ffb100;
 `;
 
-const FacebookIcon = generateShareIcon('facebook');
-const TwitterIcon = generateShareIcon('twitter');
+const FacebookIcon = generateShareIcon("facebook");
+const TwitterIcon = generateShareIcon("twitter");
 
 const FacebookShareButtonContent = styled.div`
   display: flex;
@@ -389,60 +410,61 @@ const UrlInput = styled.input`
 
 class App extends Component {
   state = {
-    currentName: '',
+    currentName: "",
     participants: [],
     currentlySelected: null,
     shuffling: false,
     popupStart: { top: 0, left: 0 },
     generatingUrl: false,
     generatingForTwitter: false,
-    currentPlaceholder: PLACEHOLDERS[Math.floor(Math.random() * PLACEHOLDERS.length)],
+    currentPlaceholder:
+      PLACEHOLDERS[Math.floor(Math.random() * PLACEHOLDERS.length)],
     seed: 0,
-    url: '',
-    ...getStoredState(),
+    url: "",
+    ...getStoredState()
   };
   elements = {};
   componentDidMount() {
-    this.intervalId = setInterval(
-      () => {
-        this.setState(({ currentPlaceholder }) => ({
-          currentPlaceholder: PLACEHOLDERS[
+    this.intervalId = setInterval(() => {
+      this.setState(({ currentPlaceholder }) => ({
+        currentPlaceholder:
+          PLACEHOLDERS[
             (PLACEHOLDERS.indexOf(currentPlaceholder) + 1) % PLACEHOLDERS.length
-          ],
-        }));
-      },
-      7000,
-    );
+          ]
+      }));
+    }, 7000);
   }
   componentWillUnmount() {
     clearInterval(this.intervalId);
   }
-  updateName = (event) => {
+  updateName = event => {
     const name = event.target.value;
     this.setState(() => ({
-      currentName: name,
+      currentName: name
     }));
   };
-  participantsWithIds = (names) => {
+  participantsWithIds = names => {
     const participantsLength = this.state.participants.length;
 
     return names.map((name, i) => ({
       id: participantsLength + i,
-      name,
+      name
     }));
   };
-  addParticipant = (event) => {
+  addParticipant = event => {
     event.preventDefault();
-    const newParticipants = this.participantsWithIds(splitToNames(this.state.currentName));
+    const newParticipants = this.participantsWithIds(
+      splitToNames(this.state.currentName)
+    );
     this.setParticipants(this.state.participants.concat(newParticipants));
   };
-  setParticipants = (names) => {
-    this.setState((state) => {
+  setParticipants = names => {
+    this.setState(state => {
       const newState = {
         ...state,
         participants: names,
-        currentName: '',
-        url: '',
+        currentName: "",
+        url: ""
       };
       writeToUrl(newState);
       return newState;
@@ -456,12 +478,14 @@ class App extends Component {
     this.setState(() => ({
       winner: null,
       shuffling: false,
-      currentlySelected: null,
+      currentlySelected: null
     }));
   };
   loop = () => {
     if (this.state.currentlySelected === this.state.targetIndex) {
-      const winnerLotRect = this.elements[this.state.winner.id].getBoundingClientRect();
+      const winnerLotRect = this.elements[
+        this.state.winner.id
+      ].getBoundingClientRect();
       this.setState(() => ({
         shuffling: false,
         currentlySelected: null,
@@ -469,8 +493,8 @@ class App extends Component {
           top: winnerLotRect.top + winnerLotRect.height / 2,
           left: winnerLotRect.left + winnerLotRect.width / 2,
           width: winnerLotRect.width,
-          height: winnerLotRect.height,
-        },
+          height: winnerLotRect.height
+        }
       }));
       return;
     }
@@ -481,19 +505,22 @@ class App extends Component {
 
     this.setState(
       ({ currentlySelected }) => ({
-        currentlySelected: currentlySelected === null ? 0 : currentlySelected + 1,
+        currentlySelected:
+          currentlySelected === null ? 0 : currentlySelected + 1
       }),
       () =>
         setTimeout(
           this.loop,
           Math.max(
             100,
-            shuffleEasing(this.state.currentlySelected / this.state.targetIndex) * 1000,
-          ),
-        ),
+            shuffleEasing(
+              this.state.currentlySelected / this.state.targetIndex
+            ) * 1000
+          )
+        )
     );
   };
-  submitIfEnter = (event) => {
+  submitIfEnter = event => {
     if (!event.shiftKey && event.keyCode === 13) {
       this.addParticipant(event);
     }
@@ -502,14 +529,14 @@ class App extends Component {
     this.elements[participant.id] = el;
   };
   generateShortUrl = (generatingForTwitter = false) => {
-    if (this.state.url !== '' && generatingForTwitter) {
+    if (this.state.url !== "" && generatingForTwitter) {
       return Promise.resolve();
     }
 
     this.setState(() => ({
       generatingUrl: true,
-      url: '',
-      generatingForTwitter,
+      url: "",
+      generatingForTwitter
     }));
 
     const onShortUrlLoaded = ({ url }) =>
@@ -517,22 +544,26 @@ class App extends Component {
         this.setState(
           () => ({
             url,
-            generatingUrl: false,
+            generatingUrl: false
           }),
-          resolve,
-        ));
+          resolve
+        )
+      );
 
     const onShortUrlFailed = () =>
       new Promise((resolve, reject) =>
         this.setState(
           () => ({
             url: window.location.href,
-            generatingUrl: false,
+            generatingUrl: false
           }),
-          resolve,
-        ));
+          resolve
+        )
+      );
 
-    return shorten(window.location.href).then(onShortUrlLoaded).catch(onShortUrlFailed);
+    return shorten(window.location.href)
+      .then(onShortUrlLoaded)
+      .catch(onShortUrlFailed);
   };
   shuffle = () => {
     const { shuffling, participants } = this.state;
@@ -542,7 +573,9 @@ class App extends Component {
     const pendingNames = splitToNames(this.state.currentName);
 
     if (pendingNames.length > 0) {
-      allParticipants = allParticipants.concat(this.participantsWithIds(pendingNames));
+      allParticipants = allParticipants.concat(
+        this.participantsWithIds(pendingNames)
+      );
     }
 
     if (shuffling) {
@@ -553,43 +586,46 @@ class App extends Component {
     const winnerIndex = Math.floor(allParticipants.length * random(seed));
     const winner = allParticipants[winnerIndex];
 
-    this.setState(
-      (state) => {
-        const newState = {
-          ...state,
-          shuffling: true,
-          url: '',
-          seed,
-          participants: allParticipants,
-          targetIndex: Math.floor(MIN_SHUFFLES / allParticipants.length) * allParticipants.length +
-            winnerIndex,
-          winner,
-        };
+    this.setState(state => {
+      const newState = {
+        ...state,
+        shuffling: true,
+        url: "",
+        seed,
+        participants: allParticipants,
+        targetIndex:
+          Math.floor(MIN_SHUFFLES / allParticipants.length) *
+            allParticipants.length +
+          winnerIndex,
+        winner
+      };
 
-        writeToUrl(newState);
+      writeToUrl(newState);
 
-        return newState;
-      },
-      this.loop,
-    );
+      return newState;
+    }, this.loop);
   };
-  removeParticipant = (participant) => {
+  removeParticipant = participant => {
     if (this.state.shuffling) {
       this.cancelShuffle();
     }
-    this.setParticipants(this.state.participants.filter((p) => p !== participant));
+    this.setParticipants(
+      this.state.participants.filter(p => p !== participant)
+    );
   };
   closeModal = () => {
     this.setState(() => ({
       winner: null,
-      seed: null,
+      seed: null
     }));
   };
   render() {
-    const cantAdd = this.state.currentName === '';
-    const multipleParticipantsInTextInput = splitToNames(this.state.currentName).length > 1;
+    const cantAdd = this.state.currentName === "";
+    const multipleParticipantsInTextInput =
+      splitToNames(this.state.currentName).length > 1;
 
-    const shuffleButtonVisible = !this.state.winner &&
+    const shuffleButtonVisible =
+      !this.state.winner &&
       !this.state.shuffling &&
       (this.state.participants.length > 1 || multipleParticipantsInTextInput);
 
@@ -604,11 +640,24 @@ class App extends Component {
             <TitleWrapper>
               <Title src={logoText} alt="Onneter" />
               <Description>
-                Arvo ihan mitä vain<br />
+                Arvo ihan mitä vain
+                <br />
               </Description>
               <SocialButtons>
-                <div className="fb-share-button" data-href={document.location.href} data-layout="button" data-size="large" data-mobile-iframe="true">
-                  <a className="fb-xfbml-parse-ignore" target="_blank noreferrer" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fonnetar.fi%2F&amp;src=sdkpreparse">Jaa</a>
+                <div
+                  className="fb-share-button"
+                  data-href={document.location.href}
+                  data-layout="button"
+                  data-size="large"
+                  data-mobile-iframe="true"
+                >
+                  <a
+                    className="fb-xfbml-parse-ignore"
+                    target="_blank noreferrer"
+                    href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fonnetar.fi%2F&amp;src=sdkpreparse"
+                  >
+                    Jaa
+                  </a>
                 </div>
               </SocialButtons>
             </TitleWrapper>
@@ -629,13 +678,16 @@ class App extends Component {
                 onChange={this.updateName}
                 type="text"
               />
-              {!cantAdd &&
+              {!cantAdd && (
                 <AddParticipantButton>
-                  Lisää<br /> osallistujat
-                </AddParticipantButton>}
+                  Lisää
+                  <br /> osallistujat
+                </AddParticipantButton>
+              )}
             </AddParticipantWrapper>
             <Tip>
-              Voit lisätä useita osallistujia yhdellä kertaa erottamalla nimet pilkulla, puolipisteellä tai rivinvaihdolla.
+              Voit lisätä useita osallistujia yhdellä kertaa erottamalla nimet
+              pilkulla, puolipisteellä tai rivinvaihdolla.
             </Tip>
           </AddParticipantForm>
           <ConfettiContainer>
@@ -643,20 +695,27 @@ class App extends Component {
           </ConfettiContainer>
           <Participants fullSized={fullSized}>
             {this.state.participants.map((participant, i) => {
-              const isWinner = !this.state.shuffling && this.state.winner === participant;
+              const isWinner =
+                !this.state.shuffling && this.state.winner === participant;
 
-              const highlighted = this.state.currentlySelected !== null &&
-                this.state.currentlySelected % this.state.participants.length === i;
+              const highlighted =
+                this.state.currentlySelected !== null &&
+                this.state.currentlySelected %
+                  this.state.participants.length ===
+                  i;
               return (
                 <Lot
-                  innerRef={(el) => this.setRef(el, participant)}
+                  innerRef={el => this.setRef(el, participant)}
                   winner={isWinner}
                   highlighted={highlighted}
                   fullSized={fullSized}
                   key={participant.id}
                 >
                   {participant.name}
-                  <RemoveLot onClick={() => this.removeParticipant(participant)} />
+                  <RemoveLotIcon>x</RemoveLotIcon>
+                  <RemoveLot
+                    onClick={() => this.removeParticipant(participant)}
+                  />
                 </Lot>
               );
             })}
@@ -666,17 +725,21 @@ class App extends Component {
             transitionEnterTimeout={600}
             transitionLeaveTimeout={600}
           >
-            {shuffleButtonVisible &&
+            {shuffleButtonVisible && (
               <ShuffleButtonContainer>
-                <ShuffleButton disabled={this.state.shuffling} key="shuffle" onClick={this.shuffle}>
+                <ShuffleButton
+                  disabled={this.state.shuffling}
+                  key="shuffle"
+                  onClick={this.shuffle}
+                >
                   Suorita arvonta
                 </ShuffleButton>
-              </ShuffleButtonContainer>}
+              </ShuffleButtonContainer>
+            )}
           </CSSTransitionGroup>
         </Content>
         <style>
-          {
-            `
+          {`
           .center-enter {
             width: ${this.state.popupStart.width}px;
             min-height: ${this.state.popupStart.height}px;
@@ -684,8 +747,7 @@ class App extends Component {
             top: ${this.state.popupStart.top}px;
             left: ${this.state.popupStart.left}px;
           }
-        `
-          }
+        `}
         </style>
         <CSSTransitionGroup
           transitionName="fade"
@@ -699,31 +761,27 @@ class App extends Component {
           transitionEnterTimeout={1000}
           transitionLeaveTimeout={10}
         >
-          {winnerModalOpen &&
+          {winnerModalOpen && (
             <WinnerPopup>
               <WinnerPopupOpening className="winner-popup-opening-content">
-                <span>
-                  {this.state.winner.name}
-                </span>
+                <span>{this.state.winner.name}</span>
               </WinnerPopupOpening>
               <WinnerPopupOpen className="winner-popup-open-content">
                 <WinnerLabel>
                   {/* Paras mahdollinen vaihtoehto on:*/}
                   Ja voittaja on:
                 </WinnerLabel>
-                <WinnerText>
-                  {this.state.winner.name}
-                </WinnerText>
+                <WinnerText>{this.state.winner.name}</WinnerText>
                 <Social>
                   <FacebookShareButtonContainer
                     url={window.location.href}
-                    title={
-                      `${this.state.winner.name} - Olet paras! Pidä tästä kiinni myös jatkossa.`
-                    }
+                    title={`${
+                      this.state.winner.name
+                    } - Olet paras! Pidä tästä kiinni myös jatkossa.`}
                     picture="http://onnetar.fi/fg-image.png"
-                    description={
-                      `Arpaonni suosi tällä kertaa osallistujaa ${this.state.winner.name}. Onnea!`
-                    }
+                    description={`Arpaonni suosi tällä kertaa osallistujaa ${
+                      this.state.winner.name
+                    }. Onnea!`}
                   >
                     <FacebookShareButtonContent>
                       <FacebookIcon size={32} round />
@@ -736,35 +794,46 @@ class App extends Component {
                   <TwitterShareButtonContainer
                     beforeOnClick={() => this.generateShortUrl(true)}
                     url={this.state.url}
-                    title={
-                      `${this.state.winner.name} - Olet paras! Pidä tästä kiinni myös jatkossa.`
-                    }
+                    title={`${
+                      this.state.winner.name
+                    } - Olet paras! Pidä tästä kiinni myös jatkossa.`}
                   >
                     <FacebookShareButtonContent>
-                      {this.state.generatingUrl && this.state.generatingForTwitter
-                        ? <img src={loader} alt="Loading" />
-                        : <TwitterIcon size={32} round />}
+                      {this.state.generatingUrl &&
+                      this.state.generatingForTwitter ? (
+                        <img src={loader} alt="Loading" />
+                      ) : (
+                        <TwitterIcon size={32} round />
+                      )}
                       <FacebookShareButtonText>
                         Jaa tulos Twitterissä
                       </FacebookShareButtonText>
                     </FacebookShareButtonContent>
                   </TwitterShareButtonContainer>
-                  {this.state.url === '' || this.state.generatingForTwitter
-                    ? <UrlShareButtonContainer onClick={() => this.generateShortUrl()}>
-                      {this.state.generatingUrl && !this.state.generatingForTwitter
-                          ? <img src={loader} alt="Loading" />
-                          : <UrlIcon />}
+                  {this.state.url === "" || this.state.generatingForTwitter ? (
+                    <UrlShareButtonContainer
+                      onClick={() => this.generateShortUrl()}
+                    >
+                      {this.state.generatingUrl &&
+                      !this.state.generatingForTwitter ? (
+                        <img src={loader} alt="Loading" />
+                      ) : (
+                        <UrlIcon />
+                      )}
                       <FacebookShareButtonText>
-                          Jaa linkki
-                        </FacebookShareButtonText>
+                        Jaa linkki
+                      </FacebookShareButtonText>
                     </UrlShareButtonContainer>
-                    : <UrlInput readOnly value={this.state.url} />}
+                  ) : (
+                    <UrlInput readOnly value={this.state.url} />
+                  )}
                 </Social>
                 <CloseModal onClick={this.closeModal}>
                   <CloseIcon />
                 </CloseModal>
               </WinnerPopupOpen>
-            </WinnerPopup>}
+            </WinnerPopup>
+          )}
         </CSSTransitionGroup>
       </AppContainer>
     );
