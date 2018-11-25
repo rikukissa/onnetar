@@ -784,13 +784,9 @@ class App extends Component {
                 <Social>
                   <FacebookShareButtonContainer
                     url={window.location.href}
-                    title={`${
+                    quote={`Arpaonni suosi tällä kertaa osallistujaa ${
                       this.state.winner.name
                     } - Olet paras! Pidä tästä kiinni myös jatkossa.`}
-                    picture="https://onnetar.fi/fg-image.png"
-                    description={`Arpaonni suosi tällä kertaa osallistujaa ${
-                      this.state.winner.name
-                    }. Onnea!`}
                   >
                     <FacebookShareButtonContent>
                       <FacebookIcon size={32} round />
