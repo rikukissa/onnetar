@@ -424,6 +424,7 @@ class App extends Component {
     ...getStoredState()
   };
   elements = {};
+  twitterShareRef = React.createRef();
   componentDidMount() {
     this.intervalId = setInterval(() => {
       this.setState(({ currentPlaceholder }) => ({
@@ -621,6 +622,12 @@ class App extends Component {
       seed: null
     }));
   };
+  shareInTwitter = event => {
+    event.stopPropagation();
+    this.generateShortUrl(true).then(() =>
+      this.twitterShareRef.current.click()
+    );
+  };
   render() {
     const cantAdd = this.state.currentName === "";
     const multipleParticipantsInTextInput =
@@ -794,13 +801,13 @@ class App extends Component {
                   </FacebookShareButtonContainer>
 
                   <TwitterShareButtonContainer
-                    beforeOnClick={() => this.generateShortUrl(true)}
-                    url={this.state.url}
+                    url={this.state.url || window.location.href}
                     title={`${
                       this.state.winner.name
                     } - Olet paras! Pidä tästä kiinni myös jatkossa.`}
                   >
-                    <FacebookShareButtonContent>
+                    <div ref={this.twitterShareRef} />
+                    <FacebookShareButtonContent onClick={this.shareInTwitter}>
                       {this.state.generatingUrl &&
                       this.state.generatingForTwitter ? (
                         <img src={loader} alt="Loading" />
