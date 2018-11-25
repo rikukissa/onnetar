@@ -9,11 +9,11 @@ import chicken from "./chicken.svg";
 import Guide from "./components/Guide";
 import Fade from "./components/Fade";
 import CloseIcon from "./components/CloseIcon";
-
 import "./App.css";
 import { Header } from "./components/Header";
 import { WinnerPopup } from "./components/WinnerPopup";
-
+import { PreviousRaffles } from "./components/PreviousRaffles.tsx";
+import { generateUrl } from "./url";
 const MIN_SHUFFLES = 30;
 
 const easeOutBy = power => t => 1 - Math.abs(Math.pow(t - 1, power));
@@ -36,22 +36,42 @@ function createSeed(timeSeed) {
 }
 
 function writeToUrl(state) {
-  const storedState = {
-    s: state.seed,
-    p: state.participants.map(({ name }) => name).join(",")
-  };
-
   window.history.pushState(
     "page2",
     "Title",
-    `/?${queryString.stringify(storedState)}`
+    generateUrl(state.participants, state.seed)
+  );
+}
+
+function storeRaffle(participants) {
+  const storedData = getLocallyStoredData();
+  storeDataLocally({
+    ...storedData,
+    previousRaffles: storedData.previousRaffles.concat({
+      participants,
+      createdAt: new Date()
+    })
+  });
+}
+
+function storeDataLocally(data) {
+  window.localStorage.setItem("onnetar", JSON.stringify(data));
+}
+
+function getLocallyStoredData() {
+  return (
+    JSON.parse(window.localStorage.getItem("onnetar") || "null") || {
+      previousRaffles: []
+    }
   );
 }
 
 function getStoredState() {
   const urlParams = queryString.parse(window.location.search);
+  const storedData = getLocallyStoredData();
 
   return {
+    ...storedData,
     seed: urlParams.s === undefined ? 0 : parseInt(urlParams.s, 10),
     participants: urlParams.p
       ? urlParams.p.split(",").map((name, id) => ({ name, id }))
@@ -394,6 +414,7 @@ class App extends Component {
       };
 
       writeToUrl(newState);
+      storeRaffle(allParticipants);
 
       return newState;
     }, this.loop);
@@ -485,6 +506,7 @@ class App extends Component {
               );
             })}
           </Participants>
+
           <CSSTransitionGroup
             transitionName="bounce"
             transitionEnterTimeout={600}
@@ -502,6 +524,9 @@ class App extends Component {
               </ShuffleButtonContainer>
             )}
           </CSSTransitionGroup>
+          {this.state.previousRaffles.length > 0 && (
+            <PreviousRaffles previousRaffles={this.state.previousRaffles} />
+          )}
         </Content>
         <style>
           {`
@@ -512,7 +537,7 @@ class App extends Component {
             top: ${this.state.popupStart.top}px;
             left: ${this.state.popupStart.left}px;
           }
-        `}
+          `}
         </style>
         <CSSTransitionGroup
           transitionName="fade"
