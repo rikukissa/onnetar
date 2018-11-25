@@ -48,7 +48,7 @@ self.__precacheManifest = [
     "url": "/static/media/step3.8bcac34c.svg"
   },
   {
-    "revision": "a5b79a98d88b5db6e87780c2208efd20",
+    "revision": "3e5313a7996716d2dada0b85d147ae55",
     "url": "/index.html"
   }
 ];
