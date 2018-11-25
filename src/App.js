@@ -649,7 +649,10 @@ class App extends Component {
             <TitleWrapper>
               <Title src={logoText} alt="Onneter" />
               <Description>
-                Arvo ihan mitä vain 🎉
+                Arvo ihan mitä vain{" "}
+                <span role="img" aria-label="tada emoji">
+                  🎉
+                </span>
                 <br />
               </Description>
               <SocialButtons>
@@ -780,7 +783,12 @@ class App extends Component {
                   {/* Paras mahdollinen vaihtoehto on:*/}
                   Ja voittaja on:
                 </WinnerLabel>
-                <WinnerText>{this.state.winner.name} 🎉</WinnerText>
+                <WinnerText>
+                  {this.state.winner.name}{" "}
+                  <span aria-label="tada emoji" role="img">
+                    🎉
+                  </span>
+                </WinnerText>
                 <Social>
                   <FacebookShareButtonContainer
                     url={window.location.href}
