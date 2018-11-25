@@ -5,7 +5,7 @@ import Textarea from "react-textarea-autosize";
 import Confetti from "react-dom-confetti";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import { ShareButtons, generateShareIcon } from "react-share";
-
+import { uniqBy } from "lodash-es";
 import logo from "./logo.svg";
 import chicken from "./chicken.svg";
 import loader from "./loader.svg";
@@ -460,9 +460,11 @@ class App extends Component {
   };
   setParticipants = names => {
     this.setState(state => {
+      const uniqueParticipants = uniqBy(names, "name");
+
       const newState = {
         ...state,
-        participants: names,
+        participants: uniqueParticipants,
         currentName: "",
         url: ""
       };
