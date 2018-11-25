@@ -787,7 +787,7 @@ class App extends Component {
                     title={`${
                       this.state.winner.name
                     } - Olet paras! Pidä tästä kiinni myös jatkossa.`}
-                    picture="http://onnetar.fi/fg-image.png"
+                    picture="https://onnetar.fi/fg-image.png"
                     description={`Arpaonni suosi tällä kertaa osallistujaa ${
                       this.state.winner.name
                     }. Onnea!`}
