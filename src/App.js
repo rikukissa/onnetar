@@ -77,7 +77,7 @@ function shuffleEasing(t) {
 
 function splitToNames(str) {
   return str
-    .split(/[,;\n]/gi)
+    .split(/[,;\n\t]/gi)
     .map(name => name.trim())
     .filter(name => name !== "");
 }
