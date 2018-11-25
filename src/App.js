@@ -688,8 +688,8 @@ class App extends Component {
               )}
             </AddParticipantWrapper>
             <Tip>
-              Voit lisätä useita osallistujia yhdellä kertaa erottamalla nimet
-              pilkulla, puolipisteellä tai rivinvaihdolla.
+              Voit lisätä osallistujat yksi kerrallaan tai usean yhdellä kertaa
+              erottamalla nimet pilkulla, puolipisteellä tai rivinvaihdolla.
             </Tip>
           </AddParticipantForm>
           <ConfettiContainer>

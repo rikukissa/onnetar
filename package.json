@@ -9,7 +9,7 @@
     "firebase-tools": "^3.6.1",
     "gh-pages": "^0.12.0",
     "lodash-es": "^4.17.11",
-    "query-string": "^4.3.4",
+    "query-string": "^6.2.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-dom-confetti": "^0.0.7",
@@ -19,19 +19,20 @@
     "styled-components": "^3.1.5"
   },
   "devDependencies": {
-    "eslint": "^3.19.0",
-    "eslint-config-airbnb": "^14.1.0",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^4.0.0",
-    "eslint-plugin-react": "^6.10.3",
-    "react-scripts": "1.1.0"
+    "react-scripts": "2.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!(lodash-es))/\"",
     "eject": "react-scripts eject",
     "predeploy": "npm run build && cp CNAME build/CNAME",
     "deploy": "gh-pages -d build"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
