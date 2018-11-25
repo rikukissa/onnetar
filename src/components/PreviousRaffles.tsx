@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
 import { generateUrl } from "../url";
-
+import uniqBy from "lodash-es/uniqBy";
 const Subtitle = styled.h2``;
 
 const PreviousRafflesContainer = styled.section`
@@ -48,13 +48,20 @@ const RaffleParticipants = styled.span`
   font-weight: bold;
 `;
 
+interface IParticipant {
+  name: string;
+}
 interface IPreviousRaffle {
-  participants: Array<{ name: string }>;
+  participants: Array<IParticipant>;
   createdAt: string;
 }
 
 interface IPreviousRafflesProps {
   previousRaffles: IPreviousRaffle[];
+}
+
+function compareStrings(a: string, b: string) {
+  return a.localeCompare(b);
 }
 
 export class PreviousRaffles extends React.Component<IPreviousRafflesProps> {
@@ -66,6 +73,13 @@ export class PreviousRaffles extends React.Component<IPreviousRafflesProps> {
       )
       .slice(0, 6);
 
+    const uniqueRaffles = uniqBy(previousRaffles, raffle =>
+      raffle.participants
+        .map(({ name }) => name)
+        .sort(compareStrings)
+        .join(",")
+    );
+
     return (
       <PreviousRafflesContainer>
         <Subtitle>
@@ -75,7 +89,7 @@ export class PreviousRaffles extends React.Component<IPreviousRafflesProps> {
           Viimeisimmät arvontasi:
         </Subtitle>
         <Raffles>
-          {previousRaffles.map(({ participants, createdAt }) => (
+          {uniqueRaffles.map(({ participants, createdAt }) => (
             <Raffle key={createdAt}>
               <Link href={generateUrl(participants)}>
                 <RaffleParticipants>
