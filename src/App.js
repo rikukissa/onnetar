@@ -210,7 +210,8 @@ const Lot = styled.div`
   ${({ highlighted }) => (highlighted ? "transform: scale(1.1, 1.1)" : "")};
   transition: transform 200ms;
   margin: 1em ${({ fullSized }) => (fullSized ? 0 : "0.5em")};
-  padding: 0.5em;
+  padding: 0.5em 1em;
+  padding-right: 3em;
   font-weight: bold;
   color: #fff;
   font-size: 18px;
