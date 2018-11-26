@@ -190,8 +190,21 @@ const ShuffleButton = styled.button`
   box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.1);
 `;
 
+const ResetButton = styled(ShuffleButton)`
+  margin: auto;
+  margin-top: 2rem;
+  width: 150px;
+  background: #ff367c;
+  padding: 1rem;
+  font-size: 16px;
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.1);
+`;
+
 const ShuffleButtonContainer = styled.div`
   margin-top: 2em;
+  text-align: right;
+  max-height: 500px;
+  overflow: hidden;
 `;
 
 const Participants = styled.div`
@@ -251,12 +264,14 @@ const RemoveLot = styled.div`
   }
 `;
 
-const RemoveLotIcon = styled(CloseIcon)`
+const RemoveIcon = styled(CloseIcon)`
   fill: #fff;
   position: absolute;
   right: 1em;
   width: 16px;
   height: 16px;
+  top: 50%;
+  margin-top: -7px;
 `;
 
 class App extends Component {
@@ -306,6 +321,9 @@ class App extends Component {
       splitToNames(this.state.currentName)
     );
     this.setParticipants(this.state.participants.concat(newParticipants));
+  };
+  reset = () => {
+    this.setParticipants([]);
   };
   setParticipants = names => {
     this.setState(state => {
@@ -499,7 +517,7 @@ class App extends Component {
                   key={participant.id}
                 >
                   {participant.name}
-                  <RemoveLotIcon>x</RemoveLotIcon>
+                  <RemoveIcon>x</RemoveIcon>
                   <RemoveLot
                     onClick={() => this.removeParticipant(participant)}
                   />
@@ -522,6 +540,7 @@ class App extends Component {
                 >
                   Suorita arvonta
                 </ShuffleButton>
+                <ResetButton onClick={this.reset}>Tyhjennä</ResetButton>
               </ShuffleButtonContainer>
             )}
           </CSSTransitionGroup>

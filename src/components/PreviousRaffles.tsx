@@ -6,8 +6,8 @@ const Subtitle = styled.h2``;
 
 const PreviousRafflesContainer = styled.section`
   border-top: 2px solid #efefef;
-  margin-top: 5em;
-  padding: 2em 0;
+  margin-top: 3em;
+  padding: 1em 0;
 `;
 const Raffles = styled.ol`
   display: flex;

@@ -1,23 +1,29 @@
 div.bounce-enter,
 div.bounce-enter:hover {
   transform: scale(0, 0);
-  transition: transform 600ms;
+  transition: all 600ms;
   transition-timing-function: ease-in-out;
+  max-height: 0px;
 }
 
 div.bounce-enter-active,
 div.bounce-enter-active:hover {
   transform: scale(1, 1);
+  max-height: 500px;
 }
 
-div.bounce-leave, div.bounce-leave:hover {
+div.bounce-leave,
+div.bounce-leave:hover {
   transform: scale(1, 1);
   transition: all 600ms;
   transition-timing-function: ease-in-out;
+  max-height: 500px;
 }
 
-div.bounce-leave-active, div.bounce-leave-active:hover {
+div.bounce-leave-active,
+div.bounce-leave-active:hover {
   transform: scale(0.1, 0.1);
+  max-height: 0px;
 }
 
 /* div prefixes so these will have greated precedence than the component styles themselves */
