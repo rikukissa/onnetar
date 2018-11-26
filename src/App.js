@@ -132,6 +132,19 @@ const AddParticipantButton = styled.button`
   font-weight: bold;
   border-radius: 0 3px 3px 0;
   margin-left: -3px;
+  .small {
+    display: none;
+  }
+  @media (max-width: 500px) {
+    font-size: 14px;
+    padding: 0.5em;
+    .large {
+      display: none;
+    }
+    .small {
+      display: inline;
+    }
+  }
 `;
 
 const AddParticipantInput = styled(Textarea)`
@@ -143,7 +156,6 @@ const AddParticipantInput = styled(Textarea)`
   border-radius: 3px;
   @media (max-width: 500px) {
     font-size: 14px;
-    min-height: 51px;
   }
   &::-webkit-input-placeholder {
     /* WebKit, Blink, Edge */
@@ -196,13 +208,16 @@ const ShuffleButton = styled.button`
   transition: transform 300ms;
   position: relative;
   box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.1);
+  @media (max-width: 500px) {
+    font-size: 20px;
+  }
 `;
 
 const ResetButton = styled(ShuffleButton)`
   margin: auto;
   margin-top: 2rem;
   width: 150px;
-  background: #ff367c;
+  background: #f95353;
   padding: 1rem;
   font-size: 16px;
   box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.1);
@@ -494,8 +509,11 @@ class App extends Component {
               />
               {!cantAdd && (
                 <AddParticipantButton>
-                  Lisää
-                  <br /> osallistujat
+                  <span className="large">
+                    Lisää
+                    <br /> osallistujat
+                  </span>
+                  <span className="small">Lisää</span>
                 </AddParticipantButton>
               )}
             </AddParticipantWrapper>
