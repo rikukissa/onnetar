@@ -1,7 +1,7 @@
+import uniqBy from "lodash-es/uniqBy";
 import * as React from "react";
 import styled from "styled-components";
 import { generateUrl } from "../url";
-import uniqBy from "lodash-es/uniqBy";
 const Subtitle = styled.h2``;
 
 const PreviousRafflesContainer = styled.section`
@@ -52,7 +52,7 @@ interface IParticipant {
   name: string;
 }
 interface IPreviousRaffle {
-  participants: Array<IParticipant>;
+  participants: IParticipant[];
   createdAt: string;
 }
 
@@ -65,7 +65,7 @@ function compareStrings(a: string, b: string) {
 }
 
 export class PreviousRaffles extends React.Component<IPreviousRafflesProps> {
-  render() {
+  public render() {
     const previousRaffles = [...this.props.previousRaffles]
       .sort(
         (a, b) =>
