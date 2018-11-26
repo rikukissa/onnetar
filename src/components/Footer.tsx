@@ -2,12 +2,12 @@ import * as React from "react";
 import styled from "styled-components";
 
 const Container = styled.footer`
-  padding: 0.5em;
+  padding: 1.5em 2em;
   margin-top: 2em;
   font-size: 18px;
+  text-align: right;
   a {
     color: inherit;
-    font-weight: bold;
     text-decoration: none;
   }
 `;
