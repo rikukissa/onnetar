@@ -15,11 +15,6 @@ if (module.hot) {
   });
 }
 
-// Prevents zooming on iOS +10
-document.addEventListener("gesturestart", function(e) {
-  e.preventDefault();
-});
-
 ReactDOM.render(<App />, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change
