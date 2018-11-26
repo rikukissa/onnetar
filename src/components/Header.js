@@ -2,8 +2,11 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import logo from "./logo.svg";
 import logoText from "./logo-text.svg";
+import { STANDALONE } from "../mobile";
 
-const Container = styled.header``;
+const Container = styled.header`
+  display: ${STANDALONE ? "none" : "block"};
+`;
 
 const Logo = styled.img`
   margin-top: -8px;
