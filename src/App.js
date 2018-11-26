@@ -14,6 +14,7 @@ import { Header } from "./components/Header";
 import { WinnerPopup } from "./components/WinnerPopup";
 import { PreviousRaffles } from "./components/PreviousRaffles.tsx";
 import { generateUrl } from "./url";
+import { Footer } from "./components/Footer";
 const MIN_SHUFFLES = 30;
 
 const easeOutBy = power => t => 1 - Math.abs(Math.pow(t - 1, power));
@@ -96,8 +97,10 @@ function splitToNames(str) {
 }
 
 const AppContainer = styled.div`
-  padding: 1em;
   transition: padding 1300ms;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 `;
 
 const Label = styled.label`
@@ -160,6 +163,7 @@ const Content = styled.div`
   flex-grow: 1;
   max-width: 800px;
   margin: auto;
+  padding: 0 1em;
 `;
 
 const ConfettiContainer = styled.div`
@@ -579,6 +583,7 @@ class App extends Component {
             />
           )}
         </CSSTransitionGroup>
+        <Footer />
       </AppContainer>
     );
   }
