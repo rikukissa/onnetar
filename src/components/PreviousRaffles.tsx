@@ -19,7 +19,7 @@ const Raffles = styled.ol`
 
 const Raffle = styled.li`
   border-radius: 5px;
-  background: linear-gradient(135deg, #1e5799 0%, #63c5ff 0%, #4281ff 100%);
+  background: linear-gradient(135deg, #63c5ff 0%, #4281ff 100%);
   width: calc(33.3% - 1em);
   margin: 0.5em;
   flex-shrink: 0;
