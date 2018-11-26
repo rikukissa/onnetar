@@ -15,7 +15,7 @@ export function Footer() {
   return (
     <Container>
       <a target="_blank" href="https://okay.codes">
-        okay codes
+        👌 okay codes
       </a>
     </Container>
   );
