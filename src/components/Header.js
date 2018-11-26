@@ -3,6 +3,8 @@ import styled from "styled-components";
 import logo from "./logo.svg";
 import logoText from "./logo-text.svg";
 
+const Container = styled.header``;
+
 const Logo = styled.img`
   margin-top: -8px;
   width: 110px;
@@ -15,21 +17,21 @@ const Logo = styled.img`
 const Description = styled.h1`
   margin: 0;
   line-height: 1.7em;
-  color: #a0a0a0;
+  color: #615f5f;
   font-size: 19px;
   text-align: center;
   font-weight: 600;
-  @media (max-width: 380px) {
-    font-size: 14px;
-  }
 `;
 
 const LogoWrapper = styled.div`
   display: flex;
-  padding: 1em;
+  padding: 1em 2em;
   margin-top: 2em;
   margin-bottom: 2em;
   justify-content: center;
+  @media (max-width: 500px) {
+    padding: 0em 2em;
+  }
 `;
 
 const TitleWrapper = styled.div`
@@ -39,16 +41,17 @@ const TitleWrapper = styled.div`
 `;
 
 const Title = styled.img`
+  align-self: center;
   width: 240px;
   @media (max-width: 380px) {
-    width: 150px;
+    width: 100%;
   }
 `;
 
 export class Header extends Component {
   render() {
     return (
-      <header>
+      <Container>
         <LogoWrapper>
           <Logo src={logo} alt="logo" />
           <TitleWrapper>
@@ -62,7 +65,7 @@ export class Header extends Component {
             </Description>
           </TitleWrapper>
         </LogoWrapper>
-      </header>
+      </Container>
     );
   }
 }

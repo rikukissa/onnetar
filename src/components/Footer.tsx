@@ -4,6 +4,7 @@ import styled from "styled-components";
 const Container = styled.footer`
   padding: 0.5em;
   margin-top: 2em;
+  font-size: 18px;
   a {
     color: inherit;
     font-weight: bold;

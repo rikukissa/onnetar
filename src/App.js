@@ -15,6 +15,7 @@ import { WinnerPopup } from "./components/WinnerPopup";
 import { PreviousRaffles } from "./components/PreviousRaffles.tsx";
 import { generateUrl } from "./url";
 import { Footer } from "./components/Footer";
+import { MOBILE_WIDTH, IS_MOBILE } from "./mobile";
 const MIN_SHUFFLES = 30;
 
 const easeOutBy = power => t => 1 - Math.abs(Math.pow(t - 1, power));
@@ -108,13 +109,14 @@ const Label = styled.label`
   display: block;
   font-weight: bold;
   color: #615f5f;
-  font-size: 16px;
+  font-size: 18px;
 `;
 
 const AddParticipantForm = styled.form``;
 
 const Tip = styled.div`
   margin-top: 1em;
+  font-size: 18px;
 `;
 
 const AddParticipantWrapper = styled.div`
@@ -132,31 +134,16 @@ const AddParticipantButton = styled.button`
   font-weight: bold;
   border-radius: 0 3px 3px 0;
   margin-left: -3px;
-  .small {
-    display: none;
-  }
-  @media (max-width: 500px) {
-    font-size: 14px;
-    padding: 0.5em;
-    .large {
-      display: none;
-    }
-    .small {
-      display: inline;
-    }
-  }
 `;
 
 const AddParticipantInput = styled(Textarea)`
+  width: 100%;
   font-family: inherit;
   font-size: 28px;
   padding: 0.75em;
   flex-grow: 1;
   border: 4px solid #9143c1;
   border-radius: 3px;
-  @media (max-width: 500px) {
-    font-size: 14px;
-  }
   &::-webkit-input-placeholder {
     /* WebKit, Blink, Edge */
     opacity: 0.6;
@@ -208,7 +195,7 @@ const ShuffleButton = styled.button`
   transition: transform 300ms;
   position: relative;
   box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.1);
-  @media (max-width: 500px) {
+  @media (max-width: ${MOBILE_WIDTH}px) {
     font-size: 20px;
   }
 `;
@@ -501,6 +488,7 @@ class App extends Component {
             <AddParticipantWrapper>
               <AddParticipantInput
                 rows={1}
+                minRows={IS_MOBILE ? 2 : undefined}
                 placeholder={this.state.currentPlaceholder}
                 onKeyDown={this.submitIfEnter}
                 value={this.state.currentName}
@@ -509,11 +497,8 @@ class App extends Component {
               />
               {!cantAdd && (
                 <AddParticipantButton>
-                  <span className="large">
-                    Lisää
-                    <br /> osallistujat
-                  </span>
-                  <span className="small">Lisää</span>
+                  Lisää
+                  <br /> osallistujat
                 </AddParticipantButton>
               )}
             </AddParticipantWrapper>
