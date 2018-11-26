@@ -141,6 +141,10 @@ const AddParticipantInput = styled(Textarea)`
   flex-grow: 1;
   border: 4px solid #9143c1;
   border-radius: 3px;
+  @media (max-width: 500px) {
+    font-size: 14px;
+    min-height: 51px;
+  }
   &::-webkit-input-placeholder {
     /* WebKit, Blink, Edge */
     opacity: 0.6;
