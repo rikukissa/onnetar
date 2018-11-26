@@ -75,8 +75,8 @@ const GuideTitle = styled.h2`
 
 const GuideDescription = styled.h2`
   text-align: center;
-  font-weight: normal;
-  font-size: inherit;
+  font-weight: bold;
+  font-size: 16px;
 `;
 
 const DEFAULT_CONFIG = {
