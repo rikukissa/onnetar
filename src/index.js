@@ -13,3 +13,8 @@ if (module.hot) {
     ReactDOM.render(<NextApp />, rootEl);
   });
 }
+
+// Prevents zooming on iOS +10
+document.addEventListener("gesturestart", function(e) {
+  e.preventDefault();
+});
