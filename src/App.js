@@ -423,6 +423,7 @@ class App extends Component {
         ...state,
         shuffling: true,
         url: "",
+        currentName: "",
         seed,
         participants: allParticipants,
         targetIndex:
