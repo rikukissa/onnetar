@@ -5,7 +5,9 @@ import logoText from "./logo-text.svg";
 import { STANDALONE } from "../mobile";
 
 const Container = styled.header`
-  display: ${STANDALONE ? "none" : "block"};
+  padding: 1em 2em;
+  margin-top: 2em;
+  margin-bottom: ${STANDALONE ? 0 : 2}em;
 `;
 
 const Logo = styled.img`
@@ -17,6 +19,38 @@ const Logo = styled.img`
   }
 `;
 
+const Title = styled.img`
+  align-self: center;
+  width: 240px;
+  @media (max-width: 380px) {
+    width: 100%;
+  }
+`;
+
+const StandaloneHeader = styled.header`
+  padding: 1em;
+  padding-top: 4em;
+  text-align: center;
+  background: #fafafa;
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid #dbdbdb;
+  margin-bottom: 2em;
+  flex-shrink: 0;
+  ${Logo} {
+    width: 50px;
+    align-self: center;
+  }
+  ${Title} {
+    width: 100px;
+  }
+`;
+
+const LogoWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
 const Description = styled.h1`
   margin: 0;
   line-height: 1.7em;
@@ -26,37 +60,28 @@ const Description = styled.h1`
   font-weight: 600;
 `;
 
-const LogoWrapper = styled.div`
-  display: flex;
-  padding: 1em 2em;
-  margin-top: 2em;
-  margin-bottom: 2em;
-  justify-content: center;
-  @media (max-width: 500px) {
-    padding: 0em 2em;
-  }
-`;
-
 const TitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
 `;
 
-const Title = styled.img`
-  align-self: center;
-  width: 240px;
-  @media (max-width: 380px) {
-    width: 100%;
-  }
-`;
-
 export class Header extends Component {
   render() {
+    if (STANDALONE) {
+      return (
+        <StandaloneHeader>
+          <Logo src={logo} alt="logo" />
+          <Title src={logoText} alt="Onneter" />
+        </StandaloneHeader>
+      );
+    }
+
     return (
       <Container>
         <LogoWrapper>
           <Logo src={logo} alt="logo" />
+
           <TitleWrapper>
             <Title src={logoText} alt="Onneter" />
             <Description>
