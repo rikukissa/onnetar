@@ -3,7 +3,8 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
-
+import "add-to-homescreen";
+import "add-to-homescreen/dist/style/addtohomescreen.css";
 const rootEl = document.getElementById("root");
 
 ReactDOM.render(<App />, rootEl);
@@ -25,3 +26,5 @@ serviceWorker.register({
     window.location.reload();
   }
 });
+
+window.addToHomescreen();

@@ -2,11 +2,37 @@ html,
 body,
 #root {
   height: 100vh;
-}
-body {
   font-size: 14px;
   font-family: -apple-system;
   font-family: "proxima-nova", "-apple-system", "Helvetica Neue", sans-serif;
   color: #615f5f;
+}
+body {
   margin: 0;
+}
+
+html .ath-container {
+  background: #2c9eff;
+  border-radius: 3px;
+  padding: 2em;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+html .ath-container p {
+  text-shadow: none;
+  color: #fff;
+}
+html .ath-container.ath-ios .ath-application-icon,
+html .ath-application-icon {
+  border-radius: 15px;
+  margin-bottom: 1em;
+}
+
+html .ath-container.ath-icon:before {
+  display: none;
+}
+
+html .ath-ios.ath-phone:after {
+  background: #2c9eff;
+  box-shadow: 3px 0px 0 rgba(0, 0, 0, 0.1);
 }

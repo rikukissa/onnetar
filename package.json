@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://onnetar.fi",
   "dependencies": {
+    "add-to-homescreen": "^3.2.6",
     "axios": "^0.16.1",
     "bezier": "^0.1.0",
     "cra-append-sw": "^2.6.0",
