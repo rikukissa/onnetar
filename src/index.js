@@ -15,10 +15,7 @@ if (module.hot) {
   });
 }
 
-console.log("updated", process.env);
-
 ReactDOM.render(<App />, document.getElementById("root"));
-console.log(process.env.PUBLIC_URL);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
