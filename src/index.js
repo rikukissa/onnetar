@@ -15,6 +15,8 @@ if (module.hot) {
   });
 }
 
+console.log("updated");
+
 ReactDOM.render(<App />, document.getElementById("root"));
 console.log(process.env.PUBLIC_URL);
 
