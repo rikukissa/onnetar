@@ -23,7 +23,7 @@ console.log("version 3");
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
 serviceWorker.register({
-  onUpdate: registration => {
+  onUpdate: async registration => {
     alert("updated");
     await registration.update();
     window.location.reload();
