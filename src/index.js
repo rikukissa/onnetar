@@ -17,6 +17,6 @@ if (module.hot) {
 
 ReactDOM.render(<App />, document.getElementById("root"));
 
-console.log("version 7");
+console.log("version 8");
 
 serviceWorker.register();
