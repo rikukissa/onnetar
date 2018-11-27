@@ -6,6 +6,7 @@
   "dependencies": {
     "axios": "^0.16.1",
     "bezier": "^0.1.0",
+    "cra-append-sw": "^2.6.0",
     "firebase-tools": "^3.6.1",
     "gh-pages": "^0.12.0",
     "lodash-es": "^4.17.11",
@@ -38,8 +39,8 @@
     "typescript": "^3.1.6"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-scripts start && cra-append-sw --skip-compile --mode dev ./src/custom-sw.js",
+    "build": "REACT_APP_GIT_SHA=`git rev-parse --short HEAD` react-scripts build && cra-append-sw --skip-compile ./src/custom-sw.js",
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!(lodash-es))/\"",
     "eject": "react-scripts eject",
     "predeploy": "npm run build && cp CNAME build/CNAME",
