@@ -17,7 +17,7 @@ if (module.hot) {
 
 ReactDOM.render(<App />, document.getElementById("root"));
 
-console.log("version 2");
+console.log("version 3");
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
@@ -25,7 +25,7 @@ console.log("version 2");
 serviceWorker.register({
   onUpdate: registration => {
     alert("updated");
-    registration.update();
+    await registration.update();
     window.location.reload();
   }
 });
