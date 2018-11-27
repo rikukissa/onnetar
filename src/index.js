@@ -17,7 +17,7 @@ if (module.hot) {
 
 ReactDOM.render(<App />, document.getElementById("root"));
 
-console.log("version 5");
+console.log("version 6");
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
