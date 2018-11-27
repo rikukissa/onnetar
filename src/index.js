@@ -17,14 +17,14 @@ if (module.hot) {
 
 ReactDOM.render(<App />, document.getElementById("root"));
 
-console.log("version 15");
+console.log("version 16");
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
 serviceWorker.register({
   onUpdate: async registration => {
-    alert("updated 15");
+    alert("updated 16");
     window.location.reload();
   }
 });
