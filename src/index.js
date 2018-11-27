@@ -24,5 +24,9 @@ console.log(process.env.PUBLIC_URL);
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
 serviceWorker.register({
-  onSuccess: () => alert("test") || window.location.reload()
+  onUpdate: registration => {
+    alert("test");
+    registration.update();
+    window.location.reload();
+  }
 });
