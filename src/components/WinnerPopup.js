@@ -56,6 +56,7 @@ const WinnerPopupOpen = styled.div`
 const WinnerLabel = styled.div`
   font-weight: bold;
   text-align: center;
+  word-break: break-all;
   font-size: 19px;
   margin-top: 0.5em;
 `;

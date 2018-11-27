@@ -38,6 +38,7 @@ const Link = styled.a`
 `;
 
 const RaffleParticipants = styled.span`
+  width: 100%;
   font-size: 22px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
