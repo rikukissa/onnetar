@@ -15,7 +15,7 @@ if (module.hot) {
   });
 }
 
-console.log("updated");
+console.log("updated", process.env);
 
 ReactDOM.render(<App />, document.getElementById("root"));
 console.log(process.env.PUBLIC_URL);
