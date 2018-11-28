@@ -104,10 +104,8 @@ function reducer(state: IState, action: IAction) {
     case "hide":
       return { ...state, visible: false };
     case "show":
-      return { ...state, visible: true };
+      return { ...state, visible: true, prompt: action.prompt };
     default:
-      // A reducer must always return a valid state.
-      // Alternatively you can throw an error if an invalid action is dispatched.
       return state;
   }
 }
