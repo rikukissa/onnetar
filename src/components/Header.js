@@ -27,8 +27,6 @@ const TitleWrapper = styled.div`
 
 const Title = styled.h1`
   @import url("https://fonts.googleapis.com/css?family=Chango");
-  -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: #831a9c;
   font-size: 50px;
   margin: 0;
   color: #9d36c7;
