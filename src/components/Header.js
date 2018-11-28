@@ -62,12 +62,14 @@ const LogoWrapper = styled.div`
 `;
 
 const Description = styled.h1`
+  @import url("https://fonts.googleapis.com/css?family=Montserrat:500");
   margin: 0;
   line-height: 1.7em;
   color: #615f5f;
   font-size: 19px;
   text-align: center;
-  font-weight: 600;
+  font-weight: 500;
+  font-family: "Montserrat", sans-serif;
 `;
 
 export class Header extends Component {
