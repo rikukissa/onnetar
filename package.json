@@ -4,7 +4,6 @@
   "private": true,
   "homepage": "https://onnetar.fi",
   "dependencies": {
-    "add-to-homescreen": "^3.2.6",
     "axios": "^0.16.1",
     "bezier": "^0.1.0",
     "cra-append-sw": "^2.6.0",
@@ -12,8 +11,8 @@
     "gh-pages": "^0.12.0",
     "lodash-es": "^4.17.11",
     "query-string": "^6.2.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "react": "^16.7.0-alpha",
+    "react-dom": "^16.7.0-alpha",
     "react-dom-confetti": "^0.0.7",
     "react-share": "^1.13.2",
     "react-textarea-autosize": "^5.2.1",
