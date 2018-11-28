@@ -27,7 +27,6 @@ const Container = styled.footer`
   left: 0;
   background: rgba(0, 0, 0, 0.2);
   animation: ${fadeIn} 300ms;
-  animation-delay: 500ms;
   position: fixed;
   display: flex;
   justify-content: flex-end;
@@ -42,7 +41,6 @@ const Content = styled.div`
   box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.05);
   text-align: left;
   animation: ${slideUp} 300ms;
-  animation-delay: 500ms;
   font-size: 16px;
   position: relative;
   h3 {
