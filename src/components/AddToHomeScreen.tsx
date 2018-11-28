@@ -1,5 +1,6 @@
 import * as React from "react";
 import styled, { keyframes } from "styled-components";
+import { useAddToHomescreenPrompt } from "../home-screen/useAddToHomescreenPrompt";
 import CloseIcon from "./CloseIcon";
 
 const fadeIn = keyframes`
@@ -71,70 +72,10 @@ const Button = styled.button`
   margin-top: 1em;
 `;
 
-interface IState {
-  visible: boolean;
-  prompt: IBeforeInstallPromptEvent | null;
-}
-
-type IAction =
-  | {
-      type: "show";
-      prompt: IBeforeInstallPromptEvent;
-    }
-  | {
-      type: "hide";
-    };
-
-const initialState: IState = {
-  visible: false,
-  prompt: null
-};
-
-interface IBeforeInstallPromptEvent extends Event {
-  readonly platforms: string[];
-  readonly userChoice: Promise<{
-    outcome: "accepted" | "dismissed";
-    platform: string;
-  }>;
-  prompt(): Promise<void>;
-}
-
-function reducer(state: IState, action: IAction) {
-  switch (action.type) {
-    case "hide":
-      return { ...state, visible: false };
-    case "show":
-      return { ...state, visible: true, prompt: action.prompt };
-    default:
-      return state;
-  }
-}
 export function AddToHomeScreen() {
-  const [state, dispatch] = React.useReducer<IState, IAction>(
-    reducer,
-    initialState
-  );
+  const [isVisible, hide, install] = useAddToHomescreenPrompt();
 
-  const hide = () => dispatch({ type: "hide" });
-  const install = () => {
-    hide();
-    if (state.prompt) {
-      state.prompt.prompt();
-    }
-  };
-
-  React.useEffect(() => {
-    const showPrompt = (e: IBeforeInstallPromptEvent) => {
-      e.preventDefault();
-      dispatch({ type: "show", prompt: e });
-    };
-    window.addEventListener("beforeinstallprompt", showPrompt as any);
-    return () => {
-      window.removeEventListener("beforeinstallprompt", showPrompt as any);
-    };
-  }, []);
-
-  if (!state.visible) {
+  if (!isVisible) {
     return <div />;
   }
 
