@@ -75,14 +75,21 @@ const Button = styled.button`
 
 interface IState {
   visible: boolean;
+  prompt: IBeforeInstallPromptEvent | null;
 }
 
-interface IAction {
-  type: string;
-}
+type IAction =
+  | {
+      type: "show";
+      prompt: IBeforeInstallPromptEvent;
+    }
+  | {
+      type: "hide";
+    };
 
 const initialState: IState = {
-  visible: false
+  visible: false,
+  prompt: null
 };
 
 interface IBeforeInstallPromptEvent extends Event {
@@ -96,8 +103,6 @@ interface IBeforeInstallPromptEvent extends Event {
 
 function reducer(state: IState, action: IAction) {
   switch (action.type) {
-    case "reset":
-      return initialState;
     case "hide":
       return { ...state, visible: false };
     case "show":
@@ -109,8 +114,6 @@ function reducer(state: IState, action: IAction) {
   }
 }
 export function AddToHomeScreen() {
-  let deferredPrompt: IBeforeInstallPromptEvent;
-
   const [state, dispatch] = React.useReducer<IState, IAction>(
     reducer,
     initialState
@@ -119,15 +122,15 @@ export function AddToHomeScreen() {
   const hide = () => dispatch({ type: "hide" });
   const install = () => {
     hide();
-    deferredPrompt.prompt();
+    if (state.prompt) {
+      state.prompt.prompt();
+    }
   };
 
   React.useEffect(() => {
     const showPrompt = (e: IBeforeInstallPromptEvent) => {
       e.preventDefault();
-      // Stash the event so it can be triggered later.
-      deferredPrompt = e;
-      dispatch({ type: "show" });
+      dispatch({ type: "show", prompt: e });
     };
     window.addEventListener("beforeinstallprompt", showPrompt as any);
     return () => {
