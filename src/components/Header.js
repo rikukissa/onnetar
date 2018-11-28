@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import logo from "./logo.svg";
-import logoText from "./logo-text.svg";
 import { STANDALONE } from "../mobile";
 
 const Container = styled.header`
@@ -19,11 +18,23 @@ const Logo = styled.img`
   }
 `;
 
-const Title = styled.img`
-  align-self: center;
-  width: 240px;
+const TitleWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 1em;
+`;
+
+const Title = styled.h1`
+  @import url("https://fonts.googleapis.com/css?family=Chango");
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #831a9c;
+  font-size: 50px;
+  margin: 0;
+  color: #9d36c7;
+  font-family: "Chango", cursive;
   @media (max-width: 380px) {
-    width: 100%;
+    font-size: 35px;
   }
 `;
 
@@ -42,7 +53,8 @@ const StandaloneHeader = styled.header`
     align-self: center;
   }
   ${Title} {
-    width: 100px;
+    font-size: 28px;
+    margin-left: 0.5rem;
   }
 `;
 
@@ -60,19 +72,13 @@ const Description = styled.h1`
   font-weight: 600;
 `;
 
-const TitleWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
-
 export class Header extends Component {
   render() {
     if (STANDALONE) {
       return (
         <StandaloneHeader>
           <Logo src={logo} alt="logo" />
-          <Title src={logoText} alt="Onneter" />
+          <Title>Onnetar</Title>
         </StandaloneHeader>
       );
     }
@@ -83,7 +89,7 @@ export class Header extends Component {
           <Logo src={logo} alt="logo" />
 
           <TitleWrapper>
-            <Title src={logoText} alt="Onneter" />
+            <Title>Onnetar</Title>
             <Description>
               Arvo ihan mitä vain{" "}
               <span role="img" aria-label="tada emoji">
