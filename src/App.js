@@ -15,6 +15,7 @@ import { WinnerPopup } from "./components/WinnerPopup";
 import { PreviousRaffles } from "./components/PreviousRaffles.tsx";
 import { generateUrl } from "./url";
 import { Footer } from "./components/Footer";
+import { AddToHomeScreen } from "./components/AddToHomeScreen";
 import { MOBILE_WIDTH, IS_MOBILE } from "./mobile";
 const MIN_SHUFFLES = 30;
 
@@ -591,6 +592,7 @@ class App extends Component {
           )}
         </CSSTransitionGroup>
         <Footer />
+        <AddToHomeScreen />
       </AppContainer>
     );
   }
