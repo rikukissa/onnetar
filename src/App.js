@@ -198,6 +198,9 @@ const ShuffleButton = styled.button`
   @media (max-width: ${MOBILE_WIDTH}px) {
     font-size: 20px;
   }
+  &:disabled {
+    opacity: 0.5;
+  }
 `;
 
 const ResetButton = styled(ShuffleButton)`
@@ -468,14 +471,12 @@ class App extends Component {
     const multipleParticipantsInTextInput =
       splitToNames(this.state.currentName).length > 1;
 
-    const shuffleButtonVisible =
-      !this.state.winner &&
-      !this.state.shuffling &&
-      (this.state.participants.length > 1 || multipleParticipantsInTextInput);
+    const shuffleButtonVisible = !this.state.winner && !this.state.shuffling;
 
     const winnerModalOpen = !this.state.shuffling && this.state.winner;
     const fullSized = this.state.participants.length < 6;
-
+    const participantsInputted =
+      this.state.participants.length > 1 || multipleParticipantsInTextInput;
     return (
       <AppContainer>
         <Header />
@@ -546,13 +547,18 @@ class App extends Component {
             {shuffleButtonVisible && (
               <ShuffleButtonContainer>
                 <ShuffleButton
-                  disabled={this.state.shuffling}
+                  disabled={this.state.shuffling || !participantsInputted}
                   key="shuffle"
                   onClick={this.shuffle}
                 >
                   Suorita arvonta
                 </ShuffleButton>
-                <ResetButton onClick={this.reset}>Tyhjennä</ResetButton>
+                <ResetButton
+                  disabled={!participantsInputted}
+                  onClick={this.reset}
+                >
+                  Tyhjennä
+                </ResetButton>
               </ShuffleButtonContainer>
             )}
           </CSSTransitionGroup>
