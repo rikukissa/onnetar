@@ -26,11 +26,13 @@ const TitleWrapper = styled.div`
 `;
 
 const Title = styled.h1`
-  @import url("https://fonts.googleapis.com/css?family=Chango");
+  @import url("https://fonts.googleapis.com/css?family=Podkova:800");
+  font-family: "Podkova", serif;
+  font-weight: 800;
   font-size: 50px;
   margin: 0;
   color: #9d36c7;
-  font-family: "Chango", cursive;
+  text-align: center;
   @media (max-width: 380px) {
     font-size: 35px;
   }
