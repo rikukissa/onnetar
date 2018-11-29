@@ -1,31 +1,3 @@
-div.bounce-enter,
-div.bounce-enter:hover {
-  transform: scale(0, 0);
-  transition: all 600ms;
-  transition-timing-function: ease-in-out;
-  max-height: 0px;
-}
-
-div.bounce-enter-active,
-div.bounce-enter-active:hover {
-  transform: scale(1, 1);
-  max-height: 500px;
-}
-
-div.bounce-leave,
-div.bounce-leave:hover {
-  transform: scale(1, 1);
-  transition: all 600ms;
-  transition-timing-function: ease-in-out;
-  max-height: 500px;
-}
-
-div.bounce-leave-active,
-div.bounce-leave-active:hover {
-  transform: scale(0.1, 0.1);
-  max-height: 0px;
-}
-
 /* div prefixes so these will have greated precedence than the component styles themselves */
 
 div.center-enter {
@@ -65,7 +37,6 @@ div.center-enter-active {
   box-sizing: border-box;
   box-shadow: 20px 20px 0px rgba(0, 0, 0, 0.5);
 }
-
 
 div.center-enter-active .winner-popup-opening-content span {
   font-size: 0px;
