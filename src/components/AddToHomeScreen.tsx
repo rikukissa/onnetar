@@ -73,7 +73,19 @@ const Button = styled.button`
 `;
 
 export function AddToHomeScreen() {
-  const [isVisible, hide, install] = useAddToHomescreenPrompt();
+  const [prompt, promptToInstall] = useAddToHomescreenPrompt();
+  const [isVisible, setVisibleState] = React.useState(false);
+
+  const hide = () => setVisibleState(false);
+
+  React.useEffect(
+    () => {
+      if (prompt) {
+        setVisibleState(true);
+      }
+    },
+    [prompt]
+  );
 
   if (!isVisible) {
     return <div />;
@@ -86,7 +98,7 @@ export function AddToHomeScreen() {
         <h3>Moi!</h3>
         Onnettaren voi myös lisätä kotivalikkoon, josta se toimii ihan niinkuin
         mikä tahansa muukin app 😍
-        <Button onClick={install}>Lisää kotivalikkoon</Button>
+        <Button onClick={promptToInstall}>Lisää kotivalikkoon</Button>
       </Content>
     </Container>
   );

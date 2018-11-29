@@ -1,24 +1,5 @@
 import * as React from "react";
 
-interface IState {
-  isVisible: boolean;
-  prompt: IBeforeInstallPromptEvent | null;
-}
-
-type IAction =
-  | {
-      type: "show";
-      prompt: IBeforeInstallPromptEvent;
-    }
-  | {
-      type: "hide";
-    };
-
-const initialState: IState = {
-  isVisible: false,
-  prompt: null
-};
-
 interface IBeforeInstallPromptEvent extends Event {
   readonly platforms: string[];
   readonly userChoice: Promise<{
@@ -28,41 +9,32 @@ interface IBeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
 }
 
-function reducer(state: IState, action: IAction) {
-  switch (action.type) {
-    case "hide":
-      return { ...state, isVisible: false };
-    case "show":
-      return { ...state, isVisible: true, prompt: action.prompt };
-    default:
-      return state;
-  }
-}
-
-export function useAddToHomescreenPrompt(): [boolean, () => void, () => void] {
-  const [state, dispatch] = React.useReducer<IState, IAction>(
-    reducer,
-    initialState
+export function useAddToHomescreenPrompt(): [
+  IBeforeInstallPromptEvent | null,
+  () => void
+] {
+  const [prompt, setState] = React.useState<IBeforeInstallPromptEvent | null>(
+    null
   );
 
-  const hide = () => dispatch({ type: "hide" });
-  const install = () => {
-    hide();
-    if (state.prompt) {
-      state.prompt.prompt();
+  const promptToInstall = () => {
+    if (prompt) {
+      prompt.prompt();
     }
   };
 
   React.useEffect(() => {
-    const showPrompt = (e: IBeforeInstallPromptEvent) => {
+    const ready = (e: IBeforeInstallPromptEvent) => {
       e.preventDefault();
-      dispatch({ type: "show", prompt: e });
+      setState(e);
     };
-    window.addEventListener("beforeinstallprompt", showPrompt as any);
+
+    window.addEventListener("beforeinstallprompt", ready as any);
+
     return () => {
-      window.removeEventListener("beforeinstallprompt", showPrompt as any);
+      window.removeEventListener("beforeinstallprompt", ready as any);
     };
   }, []);
 
-  return [state.isVisible, hide, install];
+  return [prompt, promptToInstall];
 }
