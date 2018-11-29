@@ -72,13 +72,22 @@ function getStoredState() {
   const urlParams = queryString.parse(window.location.search);
   const storedData = getLocallyStoredData();
 
-  return {
+  const participants = urlParams.p
+    ? urlParams.p.split(",").map((name, id) => ({ name, id }))
+    : [];
+
+  const hasSeed = Boolean(urlParams.s);
+
+  const state = {
     ...storedData,
-    seed: urlParams.s === undefined ? 0 : parseInt(urlParams.s, 10),
-    participants: urlParams.p
-      ? urlParams.p.split(",").map((name, id) => ({ name, id }))
-      : []
+    seed: hasSeed ? parseInt(urlParams.s, 10) : 0,
+    participants
   };
+
+  if (hasSeed) {
+    state.winner = participants[getWinnerIndex(participants, state.seed)];
+  }
+  return state;
 }
 
 function random(seed) {
@@ -95,6 +104,10 @@ function splitToNames(str) {
     .split(/[,;\n\t]/gi)
     .map(name => name.trim())
     .filter(name => name !== "");
+}
+
+function getWinnerIndex(participants, seed) {
+  return Math.floor(participants.length * random(seed));
 }
 
 const AppContainer = styled.div`
@@ -428,7 +441,7 @@ class App extends Component {
     }
 
     const seed = this.state.seed || createSeed(Date.now());
-    const winnerIndex = Math.floor(allParticipants.length * random(seed));
+    const winnerIndex = getWinnerIndex(allParticipants, seed);
     const winner = allParticipants[winnerIndex];
 
     this.setState(state => {
@@ -461,10 +474,13 @@ class App extends Component {
     );
   };
   closeModal = () => {
-    this.setState(() => ({
-      winner: null,
-      seed: null
-    }));
+    this.setState(
+      () => ({
+        winner: null,
+        seed: null
+      }),
+      () => writeToUrl(this.state)
+    );
   };
   render() {
     const cantAdd = this.state.currentName === "";
