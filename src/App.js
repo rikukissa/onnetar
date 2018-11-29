@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import * as Sentry from "@sentry/browser";
 import queryString from "query-string";
 import styled from "styled-components";
 import Textarea from "react-textarea-autosize";
@@ -327,6 +328,15 @@ class App extends Component {
   componentWillUnmount() {
     clearInterval(this.intervalId);
   }
+  componentDidCatch(error, errorInfo) {
+    Sentry.withScope(scope => {
+      Object.keys(errorInfo).forEach(key => {
+        scope.setExtra(key, errorInfo[key]);
+      });
+      Sentry.captureException(error);
+    });
+  }
+
   updateName = event => {
     const name = event.target.value;
     this.setState(() => ({

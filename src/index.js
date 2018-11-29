@@ -1,11 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import * as Sentry from "@sentry/browser";
 import App from "./App";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import "add-to-homescreen";
 import "add-to-homescreen/dist/style/addtohomescreen.css";
 const rootEl = document.getElementById("root");
+
+Sentry.init({
+  dsn: "https://99098a9cae484b5d9c38a6b5fb385648@sentry.io/1333667"
+});
 
 ReactDOM.render(<App />, rootEl);
 
