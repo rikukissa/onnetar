@@ -520,7 +520,7 @@ class App extends Component {
             <Intro>
               <p>
                 Heitä noppa roskakoriin ja lopeta työläs paperilappujen
-                repiminen ja anna Onnettaren hoitaa arpominen puolestasi. Oman
+                repiminen, ja anna Onnettaren hoitaa arpominen puolestasi. Oman
                 arvonnan luominen ei koskaan ole ollut näin helppoa!
               </p>
               <p>
