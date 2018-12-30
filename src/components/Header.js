@@ -6,7 +6,6 @@ import { STANDALONE } from "../mobile";
 const Container = styled.header`
   padding: 1em 2em;
   margin-top: 2em;
-  margin-bottom: ${STANDALONE ? 0 : 2}em;
 `;
 
 const Logo = styled.img`

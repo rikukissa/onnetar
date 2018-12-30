@@ -16,7 +16,7 @@ import { WinnerPopup } from "./components/WinnerPopup";
 import { PreviousRaffles } from "./components/PreviousRaffles.tsx";
 import { generateUrl } from "./url";
 import { Footer } from "./components/Footer";
-import { MOBILE_WIDTH, IS_MOBILE } from "./mobile";
+import { MOBILE_WIDTH, IS_MOBILE, STANDALONE } from "./mobile";
 const MIN_SHUFFLES = 30;
 
 const easeOutBy = power => t => 1 - Math.abs(Math.pow(t - 1, power));
@@ -116,6 +116,13 @@ const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+`;
+
+const Intro = styled.section`
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 2em;
+  margin-top: 1em;
 `;
 
 const Label = styled.label`
@@ -509,6 +516,26 @@ class App extends Component {
       <AppContainer>
         <Header />
         <Content>
+          {!STANDALONE && (
+            <Intro>
+              <p>
+                Heitä noppa roskakoriin ja lopeta työläs paperilappujen
+                repiminen ja anna Onnettaren hoitaa arpominen puolestasi. Oman
+                arvonnan luominen ei koskaan ole ollut näin helppoa!
+              </p>
+              <p>
+                Voit myös halutessasi jakaa arvonnan tuloksen kavereillesi
+                Facebookissa ja Twitterissä. <br />
+                <br />
+                <strong>
+                  <span role="img" aria-label="onni">
+                    ✨
+                  </span>
+                  Onnea arvontaan!
+                </strong>
+              </p>
+            </Intro>
+          )}
           <Guide />
 
           <AddParticipantForm onSubmit={this.addParticipant}>
